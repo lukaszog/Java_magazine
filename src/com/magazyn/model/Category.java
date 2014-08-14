@@ -4,6 +4,7 @@ public class Category {
 	
 	private int id;
 	private String name;
+	private String table;
  	
 	Category(int id, String name)
 	{
@@ -27,6 +28,12 @@ public class Category {
 	}	
  	public String toString() {
 		return id + ": " + name;
+	}
+	public String getTable() {
+		return table;
+	}
+	public void setTable(String table) {
+		this.table = table;
 	}
 
 }

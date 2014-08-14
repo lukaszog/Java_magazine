@@ -2,6 +2,7 @@ package com.magazyn.view;
 
 public interface CategoryListener {
 	
-	public void categoryShow();
+	public void categoryShow(int refresh);
 
+ 
 }

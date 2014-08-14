@@ -17,7 +17,7 @@ public class MySQLCategoryDAO implements CategoryDAO{
 		
 		System.out.println(conn);
 		
-		String sql = "select id, nazwa from kategorie";
+		String sql = "select id, name from kategorie";
 		Statement selectStatement =  conn.createStatement();
 		
 		ResultSet results = selectStatement.executeQuery(sql);
@@ -25,7 +25,7 @@ public class MySQLCategoryDAO implements CategoryDAO{
 		while(results.next())
 		{
 			int id = results.getInt("id");
-			String name = results.getString("nazwa");
+			String name = results.getString("name");
  
 			Category category = new Category(id, name);
 			cat.add(category);

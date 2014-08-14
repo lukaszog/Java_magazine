@@ -1,6 +1,9 @@
 package com.magazyn.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.magazyn.model.DAOFactory;
 import com.magazyn.model.Database;
 import com.magazyn.model.Model;
@@ -19,8 +22,7 @@ public class Controller implements CreateUserListener,CreateCategoryListener, Ap
 	private Model model;
 	
 	private MySQLCategoryDAO dbCategoryDAO = new MySQLCategoryDAO();
-	
-	
+ 	
 	public Controller(View view, Model model) throws SQLException, Exception {
 		
 		this.view = view;
@@ -43,8 +45,31 @@ public class Controller implements CreateUserListener,CreateCategoryListener, Ap
 		
 		CategoryDAO categoryDAO = factory.getCategoryDAO();
 		
-		System.out.println("Cateogry event "+ event.getName());
-				
+		String table = event.getTable();
+		String value = event.getName();
+		String field = "name";		
+		
+		Map<String, String> valueMap = new HashMap<String, String>();
+
+		valueMap.put(field, value);
+
+	
+		System.out.println(table);
+		try {
+			factory.insert(valueMap,table);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("Cateogry event "+ event.getName());	
+		try {
+			model.load();
+			view.loadData();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
  	public void getCategory(){		 

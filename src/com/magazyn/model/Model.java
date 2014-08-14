@@ -13,11 +13,10 @@ public class Model {
 	}
 	
 	public void load() throws Exception {
-		
+		people.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		CategoryDAO personDAO = factory.getCategoryDAO();
-		
 		people.addAll(personDAO.getCategory());
-	
 	}
+	
 }
