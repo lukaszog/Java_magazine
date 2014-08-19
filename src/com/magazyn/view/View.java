@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import com.magazyn.model.Company;
 import com.magazyn.model.Database;
 import com.magazyn.model.Model;
 import com.magazyn.model.Category;
@@ -58,10 +59,16 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 	private JPanel card1 = new JPanel();
 	private JPanel card2 = new JPanel();
+	private JPanel card3 = new JPanel();
+	private JPanel card4,card5,card6 = new JPanel();
 	private JTable jTable1 = new JTable();
+	private JTable companyTable = new JTable();
+	private JScrollPane companyScroll = new JScrollPane();
 	private JScrollPane scroll = new JScrollPane();
 	private DefaultTableModel tablemodel = new DefaultTableModel();
+	private DefaultTableModel companymodel = new DefaultTableModel();
 	private List<Category> people;
+	private List<Company> company;
 
 	int categoryflag = 0, companyflag = 0, clientflag = 0, itemflag = 0;
 
@@ -131,6 +138,10 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 	public void addComponentToPane(Container pane) {
 		tabbedPane.addTab("Lista kategorii", card1);
 		tabbedPane.addTab("Lista firm", card2);
+		tabbedPane.addTab("Produkty", card3);
+		tabbedPane.addTab("Zamówienia", card4);
+		tabbedPane.addTab("Klienci", card5);
+		tabbedPane.addTab("Informacje", card6);
 
 		tabbedPane.setPreferredSize(new Dimension(200, 30));
 
@@ -174,24 +185,47 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		// TODO Auto-generated method stub
 
 	}
-
-	public void companyShow() {
-		// TODO Auto-generated method stub
-		System.out.println("elo");
-
-	}
-
 	public void loadData() {
 
-		tablemodel.getDataVector().removeAllElements();
+		tablemodel.setRowCount(0);
 		people = model.getPeople();
 
 		for (Category person : people) {
 			tablemodel
 					.addRow(new Object[] { person.getId(), person.getName() });
 		}
-	
 		people.clear();
+
+	}
+	public void loadCompany() {
+		// TODO Auto-generated method stub
+		
+		companymodel.setRowCount(0);
+		company = model.getCompany();
+		
+		for(Company comp : company){
+			companymodel.addRow(new Object[] { comp.getId(),comp.getName(),comp.getAddress() });
+			System.out.println(comp.getAddress());
+		}
+		company.clear();
+		
+	}
+
+	@Override
+	public void companyShow() {
+		// TODO Auto-generated method stub
+		System.out.println("elo");
+		appListener.getCompany();
+		
+		companyTable = new JTable(companymodel);
+		companyScroll = new JScrollPane(companyTable);
+		
+		companymodel.addColumn("ID");
+		companymodel.addColumn("Nazwa firmy");
+		companymodel.addColumn("Adres");
+		
+		
+		card2.add(companyScroll);
 
 	}
 
@@ -239,7 +273,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 		} else { 
 				if (flag == 1) {
-				loadData();
+				//loadData();
 				flag++;
 			}
 
@@ -296,9 +330,6 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					bankTeller.setLayout(new GridBagLayout());
 
 					bankTeller.setBackground(Color.gray);
-					// bankTeller.getContentPane().add(everything,
-					// BorderLayout.CENTER);
-
 					GridBagConstraints c = new GridBagConstraints();
 
 					JPanel acctInfo = new JPanel(new GridBagLayout());
@@ -410,4 +441,5 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		}
 	}
 
+	 
 }

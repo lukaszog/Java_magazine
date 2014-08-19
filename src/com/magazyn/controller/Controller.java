@@ -8,7 +8,7 @@ import com.magazyn.model.DAOFactory;
 import com.magazyn.model.Database;
 import com.magazyn.model.Model;
 import com.magazyn.model.MySQLCategoryDAO;
-import com.magazyn.model.CategoryDAO;
+import com.magazyn.model.TableDAO;
 import com.magazyn.view.AppListener;
 import com.magazyn.view.CreateCategoryEvent;
 import com.magazyn.view.CreateCategoryListener;
@@ -16,13 +16,11 @@ import com.magazyn.view.CreateUserEvent;
 import com.magazyn.view.CreateUserListener;
 import com.magazyn.view.View;
 
-public class Controller implements CreateUserListener,CreateCategoryListener, AppListener {
+public class Controller implements CreateUserListener,CreateCategoryListener, AppListener   {
 	
 	private View view;
 	private Model model;
 	
-	private MySQLCategoryDAO dbCategoryDAO = new MySQLCategoryDAO();
- 	
 	public Controller(View view, Model model) throws SQLException, Exception {
 		
 		this.view = view;
@@ -43,7 +41,7 @@ public class Controller implements CreateUserListener,CreateCategoryListener, Ap
 		
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		
-		CategoryDAO categoryDAO = factory.getCategoryDAO();
+		TableDAO categoryDAO = factory.getCategoryDAO();
 		
 		String table = event.getTable();
 		String value = event.getName();
@@ -64,22 +62,32 @@ public class Controller implements CreateUserListener,CreateCategoryListener, Ap
 		
 		System.out.println("Cateogry event "+ event.getName());	
 		try {
-			model.load();
-			view.loadData();
+			model.load(view);
+			//view.loadData();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
- 	public void getCategory(){		 
-		 try {
-			model.load();
+ 	public void getCategory(){	
+ 
+ 		try {
+			model.load(view);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+ 	
+ 	public void getCompany(){
+ 		
+ 		try{
+ 			model.loadCompany(view);
+ 		}catch (Exception e){
+ 			e.printStackTrace();
+ 		}
+ 	}
 	
  	public void onOpen() {
 		try {

@@ -12,7 +12,7 @@ import com.magazyn.view.View;
 
 public class MySQLDAOFactory extends DAOFactory {
 
- 	public CategoryDAO getCategoryDAO() {
+ 	public TableDAO getCategoryDAO() {
 		return new MySQLCategoryDAO();
 	}
  	

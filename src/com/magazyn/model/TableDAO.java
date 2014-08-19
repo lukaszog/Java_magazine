@@ -7,8 +7,9 @@ import java.util.List;
  * * One DAO class person table or view
  */
 
-public interface CategoryDAO {
+public interface TableDAO {
 
 	public List<Category> getCategory() throws SQLException;
+	public List<Company> getCompany() throws SQLException;
 	
 }
