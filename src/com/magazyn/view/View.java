@@ -32,6 +32,8 @@ import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -54,19 +56,26 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 	private JButton savingsBtn;
 
 	private CreateCategoryListener categoryListener;
+	private CreateCompanyListener companyListener;
 
 	JTabbedPane tabbedPane = new JTabbedPane();
 
 	private JPanel card1 = new JPanel();
 	private JPanel card2 = new JPanel();
 	private JPanel card3 = new JPanel();
-	private JPanel card4,card5,card6 = new JPanel();
+	private JPanel card4, card5, card6 = new JPanel();
 	private JTable jTable1 = new JTable();
 	private JTable companyTable = new JTable();
 	private JScrollPane companyScroll = new JScrollPane();
 	private JScrollPane scroll = new JScrollPane();
 	private DefaultTableModel tablemodel = new DefaultTableModel();
 	private DefaultTableModel companymodel = new DefaultTableModel();
+	private JPanel controls = new JPanel();
+	private JPanel buttons = new JPanel();
+	private JButton newrow = new JButton();
+	private JButton print = new JButton();
+	private JButton deletebutton = new JButton("Usuñ");
+
 	private List<Category> people;
 	private List<Company> company;
 
@@ -143,14 +152,17 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		tabbedPane.addTab("Klienci", card5);
 		tabbedPane.addTab("Informacje", card6);
 
-		tabbedPane.setPreferredSize(new Dimension(200, 30));
+		tabbedPane.addChangeListener(new ChangeListener() {
 
-		tabbedPane.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-
+			@Override
+			public void stateChanged(ChangeEvent event) {
+				// TODO Auto-generated method stub
 				int paneindex = tabbedPane.getSelectedIndex();
 
 				switch (paneindex) {
+				case 0:
+					System.out.println("zero");
+					break;
 				case 1:
 					if (companyflag == 0) {
 						companyShow();
@@ -159,7 +171,9 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					break;
 				}
 			}
+
 		});
+
 		categoryShow(0);
 		clientsShow();
 
@@ -185,6 +199,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		// TODO Auto-generated method stub
 
 	}
+
 	public void loadData() {
 
 		tablemodel.setRowCount(0);
@@ -197,18 +212,52 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		people.clear();
 
 	}
+
 	public void loadCompany() {
 		// TODO Auto-generated method stub
-		
+
 		companymodel.setRowCount(0);
 		company = model.getCompany();
-		
-		for(Company comp : company){
-			companymodel.addRow(new Object[] { comp.getId(),comp.getName(),comp.getAddress() });
+
+		for (Company comp : company) {
+			companymodel.addRow(new Object[] { comp.getId(), comp.getName(),
+					comp.getAddress() });
 			System.out.println(comp.getAddress());
 		}
 		company.clear();
-		
+
+	}
+
+	public void tableEdit(final JTable table) {
+		table.getModel().addTableModelListener(new TableModelListener() {
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				// TODO Auto-generated method stub
+				if (table.getCellEditor() != null) {
+
+					int col = table.getSelectedColumn();
+					if (col != 0) {
+						int id = (int) table.getValueAt(table.getSelectedRow(),
+								0);
+						if (table == jTable1) {
+							String value = (String) table.getValueAt(
+									table.getSelectedRow(),
+									table.getSelectedColumn());
+							fireCategoryEvent(new CategoryEvent(value,
+									"kategorie", id, "update"));
+						} else if (table == companyTable) {
+							String value = (String) table.getValueAt(
+									table.getSelectedRow(), 1);
+							String value2 = (String) table.getValueAt(
+									table.getSelectedRow(), 2);
+
+							fireCompanyEvent(new CompanyEvent(value, "firmy",
+									value2, id, "update"));
+						}
+					}
+				}
+			}
+		});
 	}
 
 	@Override
@@ -216,73 +265,118 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		// TODO Auto-generated method stub
 		System.out.println("elo");
 		appListener.getCompany();
-		
-		companyTable = new JTable(companymodel);
+
+		companyTable = new JTable(companymodel) {
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				if (column == 0) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
+				Component c = super.prepareRenderer(renderer, row, column);
+				if (c instanceof JComponent) {
+					JComponent jc = (JComponent) c;
+					if (column != 0) {
+						jc.setToolTipText("Edytuj: "
+								+ getValueAt(row, column).toString());
+					}
+				}
+				return c;
+			}
+		};
+
 		companyScroll = new JScrollPane(companyTable);
-		
 		companymodel.addColumn("ID");
 		companymodel.addColumn("Nazwa firmy");
 		companymodel.addColumn("Adres");
-		
-		
-		card2.add(companyScroll);
+		companyTable.setRowHeight(20);
+		TableColumnModel tcm = companyTable.getColumnModel();
+		tcm.getColumn(0).setMaxWidth(50);
+		companyTable.getTableHeader().setFont(new Font("Arial", 0, 15));
 
+		tableEdit(companyTable); // edycja tabeli
+
+		controls = new JPanel(new BorderLayout(5, 5));
+		buttons = new JPanel(new GridLayout(0, 1, 4, 4));
+		newrow = new JButton("Dodaj");
+		print = new JButton("Drukuj");
+		deletebutton = new JButton("Usuñ");
+
+		buttons.add(newrow);
+		buttons.add(deletebutton);
+		buttons.add(print);
+		buttons.setBorder(new TitledBorder("Zarz¹dzaj"));
+
+		controls.add(buttons, BorderLayout.NORTH);
+
+		card2.add(companyScroll);
+		card2.add(controls);
 	}
 
 	@Override
 	public void categoryShow(int refresh) {
 		// TODO Auto-generated method stub
 		appListener.getCategory();
-		jTable1 = new JTable(tablemodel){
+		jTable1 = new JTable(tablemodel) {
 
 			private static final long serialVersionUID = 1L;
 
-			public boolean isCellEditable(int row,int column){  
-		         if(column==0){
-		        	 return false;
-		         }
-		         else{
-		        	 return true;
-		         }		   
-		     } 
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-		        Component c = super.prepareRenderer(renderer, row, column);
-		        if (c instanceof JComponent) {
-		            JComponent jc = (JComponent) c;
-		            if(column!=0){
-		            jc.setToolTipText("Edytuj: " + getValueAt(row, column).toString());
-		            }
-		         }
-		        return c;
-		    }
+			public boolean isCellEditable(int row, int column) {
+				if (column == 0) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
+				Component c = super.prepareRenderer(renderer, row, column);
+				if (c instanceof JComponent) {
+					JComponent jc = (JComponent) c;
+					if (column != 0) {
+						jc.setToolTipText("Edytuj: "
+								+ getValueAt(row, column).toString());
+					}
+				}
+				return c;
+			}
 		};
 		scroll = new JScrollPane(jTable1);
-		
+
 		TableColumnModel tcm = jTable1.getColumnModel();
 		tablemodel.addColumn("ID");
 		tablemodel.addColumn("Nazwa");
-		
+
 		jTable1.setRowHeight(20);
 		jTable1.getColumn("ID").setCellEditor(null);
-		jTable1.getTableHeader().setFont( new Font( "Arial" , 0, 15 ));
+		jTable1.getTableHeader().setFont(new Font("Arial", 0, 15));
 		tcm.getColumn(0).setMaxWidth(50);
-		
+
 		int flag;
 		flag = 1;
 		if (refresh == 1) {
 
-		} else { 
-				if (flag == 1) {
-				//loadData();
+		} else {
+			if (flag == 1) {
+				// loadData();
 				flag++;
 			}
 
-			JPanel controls = new JPanel(new BorderLayout(5, 5));
-			JPanel buttons = new JPanel(new GridLayout(0, 1, 4, 4));
+			controls = new JPanel(new BorderLayout(5, 5));
+			buttons = new JPanel(new GridLayout(0, 1, 4, 4));
+			newrow = new JButton("Dodaj");
+			print = new JButton("Drukuj");
+			deletebutton = new JButton("Usuñ");
 
-			final JButton deletebutton = new JButton("Usuñ");
-			JButton newrow = new JButton("Dodaj");
-			JButton print = new JButton("Drukuj");
+			tableEdit(jTable1); // edycja tabeli
 
 			print.addActionListener(new ActionListener() {
 				@Override
@@ -294,29 +388,6 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 						System.err.println("Blad przy drukowaniu");
 					}
 				}
-			});
-			jTable1.getModel().addTableModelListener(new TableModelListener() {
-				@Override
-				public void tableChanged(TableModelEvent e) {
-					// TODO Auto-generated method stub
-					if (jTable1.getCellEditor() != null) {
-						
-						
-						int col = jTable1.getSelectedColumn();
-						if(col!=0){
-						String columnname = jTable1.getColumnName(col);
-						System.out.println(jTable1.getSelectedColumn());
-						System.out.println("--" + columnname);
-						System.out.println(jTable1.getValueAt(
-								jTable1.getSelectedRow(),
-								jTable1.getSelectedColumn())); // nowa wartosc
-						System.out.println(jTable1.getValueAt(
-								jTable1.getSelectedRow(), 0)); // id
-						}
-					}
-
-				}
-
 			});
 			newrow.addActionListener(new ActionListener() {
 
@@ -387,8 +458,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 										"Dodano", "Dodano",
 										JOptionPane.INFORMATION_MESSAGE);
 
-								fireCategoryEvent(new CreateCategoryEvent(name,
-										"kategorie"));
+								fireCategoryEvent(new CategoryEvent(name,
+										"kategorie", 0, "add"));
 							} else {
 								JOptionPane.showMessageDialog(View.this,
 										"Uzupe³nij pole nazwa",
@@ -399,6 +470,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					});
 				}
 			});
+
 			deletebutton.setEnabled(false);
 			jTable1.addMouseListener(new MouseAdapter() {
 				@Override
@@ -415,6 +487,9 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 					if (selRow >= 0) {
 						System.out.println(selRow);
+						fireDeleteEvent(new CompanyEvent(null, "kategorie",
+								null, selRow, ""));
+
 					}
 				}
 			});
@@ -435,11 +510,24 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		this.categoryListener = categoryListener;
 	}
 
-	public void fireCategoryEvent(CreateCategoryEvent event) {
+	public void setCompanyListener(CreateCompanyListener companyListener) {
+		this.companyListener = companyListener;
+	}
+
+	public void fireCategoryEvent(CategoryEvent event) {
 		if (categoryListener != null) {
 			categoryListener.addCategory(event);
 		}
 	}
 
-	 
+	public void fireDeleteEvent(CompanyEvent event) {
+		appListener.deleteRow(event);
+	}
+
+	public void fireCompanyEvent(CompanyEvent event) {
+		if (companyListener != null) {
+			companyListener.addCompany(event);
+		}
+	}
+
 }

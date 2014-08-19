@@ -1,6 +1,5 @@
 package com.magazyn.view;
 
 public interface CreateCategoryListener {
-	public void addCategory(CreateCategoryEvent event);
-
+	public void addCategory(CategoryEvent event);
 }

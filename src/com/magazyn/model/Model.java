@@ -37,11 +37,11 @@ public class Model {
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		TableDAO personDAO = factory.getCategoryDAO();
 		System.out.println("Model load working");
-		((MySQLCategoryDAO)personDAO).setJob(Job.SELECT);
-		((MySQLCategoryDAO)personDAO).setItself(this);
-		((MySQLCategoryDAO)personDAO).setTable("kategorie");
-		((MySQLCategoryDAO)personDAO).setView(view);
-		((MySQLCategoryDAO)personDAO).execute();		
+		((dbDAO)personDAO).setJob(Job.SELECT);
+		((dbDAO)personDAO).setItself(this);
+		((dbDAO)personDAO).setTable("kategorie");
+		((dbDAO)personDAO).setView(view);
+		((dbDAO)personDAO).execute();		
 		if (people == null) System.out.println("Categories is null");	
 	}	
 	
@@ -50,11 +50,23 @@ public class Model {
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		TableDAO companyDAO = factory.getCategoryDAO();
 		System.out.println("Model loadCompany working");
-		((MySQLCategoryDAO)companyDAO).setJob(Job.SELECT);
-		((MySQLCategoryDAO)companyDAO).setTable("firmy");
-		((MySQLCategoryDAO)companyDAO).setItself(this);
-		((MySQLCategoryDAO)companyDAO).setView(view);
-		((MySQLCategoryDAO)companyDAO).execute();
+		((dbDAO)companyDAO).setJob(Job.SELECT);
+		((dbDAO) companyDAO).setTable("firmy");
+		((dbDAO)companyDAO).setItself(this);
+		((dbDAO)companyDAO).setView(view);
+		((dbDAO)companyDAO).execute();
+		
+	}
+	
+	public void loadItem(View view) throws Exception{
+		
+	}
+	
+	public void loadOrder(View view) throws Exception{
+		
+	}
+	
+	public void loadClient(View view) throws Exception{
 		
 	}
 }
