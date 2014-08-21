@@ -9,6 +9,6 @@ public interface AppListener {
 	public void getOrder();
 	public void getItem();
 	public void getClient();
-	public void deleteRow(CompanyEvent event);
+	public void deleteRow(CompanyEvent event, String table);
 	
 }

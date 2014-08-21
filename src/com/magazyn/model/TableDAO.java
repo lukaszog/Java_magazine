@@ -13,6 +13,6 @@ public interface TableDAO {
 	public List<Company> getCompany() throws SQLException;
 	public List<Client> getClient() throws SQLException;
 	public List<Order> getOrder() throws SQLException;
-	public List<Item> getItems() throws SQLException;
+	public List<Item> getItem() throws SQLException;
 	
 }

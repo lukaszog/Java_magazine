@@ -41,6 +41,7 @@ public class Application {
 
 		view.setCategoryListener(controller);
 		view.setCompanyListener(controller);
+		view.setItemListener(controller);
 	}
 
 }

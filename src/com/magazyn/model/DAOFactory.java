@@ -9,7 +9,7 @@ public abstract class DAOFactory {
 	public static final int ORACLE = 1;
 	
 	public abstract TableDAO getCategoryDAO();
-	public abstract int question(String type, Map<String, String> valueMap, String table, int id) throws SQLException;
+	public abstract int question(String type, Map<Object, Object> valueMap, String table, int id) throws SQLException;
 	public abstract int delete(String table, int id) throws SQLException;
 	
 	public static DAOFactory getFactory(int type){

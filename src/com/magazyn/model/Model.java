@@ -10,6 +10,7 @@ public class Model {
 	
 	private List<Category> people = new Vector<Category>();
 	private List<Company> company = new Vector<Company>();
+	private List<Item> item = new Vector<Item>();
 	
 	public List<Category> getPeople() {
 		System.out.println(people.size());
@@ -19,6 +20,12 @@ public class Model {
 	public List<Company> getCompany(){
 	//	System.out.println(company.size());
 		return new ArrayList<Company>(company);
+	}
+	public List<Item> getItem(){
+		return new ArrayList<Item>(item);
+	}
+	public void setItem(List<Item> item){
+		this.item = item;
 	}
 	
 	public void setPeople(List<Category> people) {
@@ -55,11 +62,18 @@ public class Model {
 		((dbDAO)companyDAO).setItself(this);
 		((dbDAO)companyDAO).setView(view);
 		((dbDAO)companyDAO).execute();
-		
 	}
 	
 	public void loadItem(View view) throws Exception{
-		
+		item.clear();
+		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
+		TableDAO itemDAO = factory.getCategoryDAO();
+		System.out.println("Model loadItem working");
+		((dbDAO)itemDAO).setJob(Job.SELECT);
+		((dbDAO)itemDAO).setTable("produkty");
+		((dbDAO)itemDAO).setItself(this);
+		((dbDAO)itemDAO).setView(view);
+		((dbDAO)itemDAO).execute();
 	}
 	
 	public void loadOrder(View view) throws Exception{

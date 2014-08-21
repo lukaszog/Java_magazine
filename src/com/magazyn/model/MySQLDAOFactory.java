@@ -18,12 +18,12 @@ public class MySQLDAOFactory extends DAOFactory {
 	private String updateval = "";
 	private int x = 1;
 
-	public void prepare(Map<String, String> valueMap) {
+	public void prepare(Map<Object, Object> valueMap) {
 
 		Integer mapsize = valueMap.size();
 		Integer x = 1;
 
-		for (Map.Entry<String, String> entry : valueMap.entrySet()) {
+		for (Map.Entry<Object, Object> entry : valueMap.entrySet()) {
 
 			val += entry.getKey();
 			question += "?";
@@ -52,7 +52,7 @@ public class MySQLDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public int question(String type, Map<String, String> valueMap,
+	public int question(String type, Map<Object, Object> valueMap,
 			String table, int id) throws SQLException {
 
 		System.out.println("question");
@@ -69,7 +69,7 @@ public class MySQLDAOFactory extends DAOFactory {
 		
 		System.out.println(query);
 		PreparedStatement add = conn.prepareStatement(query);
-		for (Map.Entry<String, String> entry : valueMap.entrySet()) {
+		for (Map.Entry<Object, Object> entry : valueMap.entrySet()) {
 			add.setObject(x, entry.getValue());
 			x += 1;
 		}

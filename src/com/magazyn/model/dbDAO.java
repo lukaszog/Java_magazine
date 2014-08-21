@@ -54,7 +54,10 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 			companies = getCompany();
 			System.out.println("za company");
 		}
-
+		if (table == "produkty") {
+			items = getItem();
+			System.out.println("za itemami");
+		}
 		return null;
 	}
 
@@ -72,6 +75,10 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 			System.out.println("done firmy");
 			model.setCompany(companies);
 			view.loadCompany();
+		}
+		if(table=="produkty"){
+			model.setItem(items);
+			view.loadItem();
 		}
 	}
 
@@ -130,8 +137,35 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 	}
 
 	@Override
-	public List<Item> getItems() throws SQLException {
+	public List<Item> getItem() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		List<Item> ite = new ArrayList<Item>();
+		Connection conn = Database.getInstance().getConnection();
+
+		String sql = "select  P.id,P.id_kategoria,P.id_firmy,P.nazwa,K.name,F.nazwa"
+				+ " 	from produkty P	"
+				+ "     join kategorie K on P.id_kategoria=K.id"
+				+ "	    join firmy F on P.id_firmy=F.id";
+
+		Statement selectStatement = conn.createStatement();
+		ResultSet results = selectStatement.executeQuery(sql);
+
+		while (results.next()) {
+			int id = results.getInt("id");
+			String category = results.getString("K.name");
+			String company = results.getString("F.nazwa");
+			String name = results.getString("P.nazwa");
+			int id_category = results.getInt("P.id_kategoria");
+			int id_company = results.getInt("P.id_firmy");
+
+			Item item = new Item(id, category, company, name, id_category,
+					id_company);
+			ite.add(item);
+
+		}
+		results.close();
+		selectStatement.close();
+
+		return ite;
 	}
 }

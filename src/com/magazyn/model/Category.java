@@ -6,7 +6,7 @@ public class Category {
 	private String name;
 	private String table;
  	
-	Category(int id, String name)
+	public Category(int id, String name)
 	{
 		this.name = name;
 		this.id  = id;
@@ -27,7 +27,7 @@ public class Category {
 		this.name = name;
 	}	
  	public String toString() {
-		return id + ": " + name;
+		return name;
 	}
 	public String getTable() {
 		return table;
