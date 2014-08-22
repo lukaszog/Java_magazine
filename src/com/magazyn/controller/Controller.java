@@ -75,6 +75,8 @@ public class Controller implements CreateCategoryListener,
 				model.load(view);
 			} else if (table == "firmy") {
 				model.loadCompany(view);
+			} else if(table == "produkty"){
+				model.loadItem(view);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -19,6 +19,8 @@ public class Model {
 	
 	public List<Company> getCompany(){
 	//	System.out.println(company.size());
+		System.out.println("Jestem w getCompany, rozmiar:" + company.size());
+		
 		return new ArrayList<Company>(company);
 	}
 	public List<Item> getItem(){

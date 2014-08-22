@@ -90,7 +90,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 	private int box_flag_item = 0;
 	private int box_flag_category = 0;
 	private int box_flag_company;
-
+	private int newrow_flag = 0;
 
 	int categoryflag = 0, companyflag = 0, clientflag = 0, itemflag = 0;
 	private int id_category;
@@ -237,9 +237,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 				if (table.getCellEditor() != null) {
 
 					int col = table.getSelectedColumn();
-					id = (int) table.getValueAt(table.getSelectedRow(),
-							0);
-				
+					id = (int) table.getValueAt(table.getSelectedRow(), 0);
+
 					if (col != 0) {
 						if (table == jTable1) {
 							String value = (String) table.getValueAt(
@@ -256,7 +255,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 							fireCompanyEvent(new CompanyEvent(value, "firmy",
 									value2, id, "update"));
 						} else if (table == itemTable) {
-							
+
 							System.out.println(id);
 
 							if (box_flag_category == 1) {
@@ -275,10 +274,45 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		});
 	}
 
+	public void deleteAction(final JTable Jb, final String table) {
+
+		deletebutton.setEnabled(false);
+		Jb.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deletebutton.setEnabled(true);
+			}
+		});
+
+		deletebutton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selRow = (Integer) Jb.getValueAt(Jb.getSelectedRow(), 0);
+				if (selRow >= 0) {
+					System.out.println(selRow);
+					if (table == "kategorie") {
+						fireDeleteEvent(new CompanyEvent(null, "kategorie",
+								null, selRow, ""), "kategorie");
+					} else if (table == "firmy") {
+						fireDeleteEvent(new CompanyEvent(null, "firmy", null,
+								selRow, ""), "firmy");
+					} else if (table == "produkty") {
+						System.out.println("Produkty: " + selRow);
+						fireDeleteEvent(new CompanyEvent(null, "produkty",
+								null, selRow, ""), "produkty");
+					}
+				}
+
+			}
+		});
+	}
+
 	public void loadData() {
 
 		tablemodel.setRowCount(0);
 		people = model.getPeople();
+
+		System.out.println("jestem w load kategorie");
 
 		for (Category person : people) {
 			tablemodel
@@ -291,12 +325,15 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 	public void loadCompany() {
 		// TODO Auto-generated method stub
 
+		System.out.println("Jestem w load Company");
 		companymodel.setRowCount(0);
 		company = model.getCompany();
 
 		for (Company comp : company) {
 			companymodel.addRow(new Object[] { comp.getId(), comp.getName(),
 					comp.getAddress() });
+			companyBox.addItem(new Company(comp.getId(), comp.getName(), comp
+					.getAddress()));
 
 			// System.out.println(comp.getAddress());
 		}
@@ -308,21 +345,17 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 		itemmodel.setRowCount(0);
 		item = model.getItem();
-		System.out
-				.println("Jestem w loadItem**********************************88");
 		people = model.getPeople();
 
 		for (Category person : people) {
 			categoryBox.addItem(new Category(person.getId(), person.getName()));
+			System.out.println("dodaje kategorie do boxa");
 		}
-		company = model.getCompany();
-		for (Company comp : company) {
-			companyBox.addItem(new Company(comp.getId(), comp.getName(), null));
-			// System.out.println("dodaje do boxa");
-		}
+		people.clear();
 		for (Item ite : item) {
 			itemmodel.addRow(new Object[] { ite.getId(), ite.getName(),
 					ite.getCategory(), ite.getCompany() });
+			System.out.println("dodaje itemy do boxa");
 		}
 		item.clear();
 	}
@@ -330,6 +363,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 	@Override
 	public void itemShow() {
 		// TODO Auto-generated method stub
+
+		appListener.getCompany();
 		appListener.getItem();
 		System.out.println("itemShow!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
@@ -379,57 +414,62 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 		tableEdit(itemTable); // edycja tabeli
 
-		
 		categoryBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent event) {
-				JComboBox comboBox = (JComboBox) event.getSource();
-				Object item = event.getItem();
-				if (event.getStateChange() == ItemEvent.SELECTED
-						&& box_flag_category > 0) {
-					System.out.println(item.toString()
-							+ " selected!!!!!!!!!!!!");
-					Category selected_category = (Category) categoryBox
-							.getSelectedItem();
-					
-					int rowid = (int) itemTable.getValueAt(itemTable.getSelectedRow(),
-							0);
-					
-					id_category = selected_category.getId();
-					System.out.println("Id kategorii:" + id_category + "Id wiersza: " + id);
-					
-				fireItemEvent(new ItemsEvent(rowid, "produkty",
-							null, null, null, id_category,
-							id_company, "update"), "box_category");
-					
+				if (newrow_flag == 0) {
+					JComboBox comboBox = (JComboBox) event.getSource();
+					Object item = event.getItem();
+					if (event.getStateChange() == ItemEvent.SELECTED
+							&& box_flag_category > 0) {
+						System.out.println(item.toString()
+								+ " selected!!!!!!!!!!!!");
+						Category selected_category = (Category) categoryBox
+								.getSelectedItem();
+
+						int rowid = (int) itemTable.getValueAt(
+								itemTable.getSelectedRow(), 0);
+
+						id_category = selected_category.getId();
+						System.out.println("Id kategorii:" + id_category
+								+ "Id wiersza: " + id);
+
+						fireItemEvent(new ItemsEvent(rowid, "produkty", null,
+								null, null, id_category, id_company, "update"),
+								"box_category");
+
+					}
+					box_flag_category++;
 				}
-				box_flag_category++;
 			}
 		});
 
 		companyBox.addItemListener(new ItemListener() {
-		 
+
 			public void itemStateChanged(ItemEvent event) {
-				JComboBox comboBox = (JComboBox) event.getSource();
-				Object item = event.getItem();
-				if (event.getStateChange() == ItemEvent.SELECTED
-						&& box_flag_company > 0) {
-					System.out.println(item.toString()
-							+ " selected!!!!!!!!!!!!");
-					Company selected_company = (Company) companyBox
-							.getSelectedItem();
-					
-					int rowid = (int) itemTable.getValueAt(itemTable.getSelectedRow(),
-							0);
-					
-					id_company = selected_company.getId();
-					System.out.println("Id kategorii:" + id_category + "Id wiersza: " + id);
-					
-				fireItemEvent(new ItemsEvent(rowid, "produkty",
-							null, null, null, id_category,
-							id_company, "update"), "box_company");
-					
+				if (newrow_flag == 0) {
+					JComboBox comboBox = (JComboBox) event.getSource();
+					Object item = event.getItem();
+					if (event.getStateChange() == ItemEvent.SELECTED
+							&& box_flag_company > 0) {
+						System.out.println(item.toString()
+								+ " selected!!!!!!!!!!!!");
+						Company selected_company = (Company) companyBox
+								.getSelectedItem();
+
+						int rowid = (int) itemTable.getValueAt(
+								itemTable.getSelectedRow(), 0);
+
+						id_company = selected_company.getId();
+						System.out.println("Id kategorii:" + id_category
+								+ "Id wiersza: " + id);
+
+						fireItemEvent(new ItemsEvent(rowid, "produkty", null,
+								null, null, id_category, id_company, "update"),
+								"box_company");
+
+					}
+					box_flag_company++;
 				}
-				box_flag_company++;
 			}
 		});
 		controls = new JPanel(new BorderLayout(5, 5));
@@ -437,7 +477,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		newrow = new JButton("Dodaj");
 		print = new JButton("Drukuj");
 		deletebutton = new JButton("Usuñ");
-		deleteAction(itemTable, "firmy");
+		deleteAction(itemTable, "produkty");
 
 		newrow.addActionListener(new ActionListener() {
 
@@ -445,6 +485,11 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 			public void actionPerformed(ActionEvent e) {
 
 				final JFrame bankTeller = new JFrame("Dodaj now¹ firmê");
+				bankTeller.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				bankTeller.getRootPane().setWindowDecorationStyle(
+						JRootPane.NONE);
+
+				newrow_flag = 1;
 				bankTeller.setSize(500, 280);
 				bankTeller.setLocationRelativeTo(null);
 				bankTeller.setResizable(false);
@@ -462,18 +507,25 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 				bankTeller.add(acctInfo, c);
 				c.gridwidth = 1;
 
-				JLabel custNameLbl = new JLabel("Nazwa firmy");
+				JLabel custNameLbl = new JLabel("Nazwa produktu");
 				c.gridx = 0;
 				c.gridy = 0;
 				c.insets = new Insets(0, 0, 0, 0);
 				acctInfo.add(custNameLbl, c);
 				c.weightx = 1.;
 
-				JLabel custAddressLbl = new JLabel("Adres firmy");
+				JLabel custCategoryLbl = new JLabel("Kategoria");
 				c.gridx = 0;
 				c.gridy = 1;
 				c.insets = new Insets(0, 0, 0, 0);
-				acctInfo.add(custAddressLbl, c);
+				acctInfo.add(custCategoryLbl, c);
+				c.weightx = 1.;
+
+				JLabel custCompanyLbl = new JLabel("Firma");
+				c.gridx = 0;
+				c.gridy = 2;
+				c.insets = new Insets(0, 0, 0, 0);
+				acctInfo.add(custCompanyLbl, c);
 				c.weightx = 1.;
 
 				c.fill = GridBagConstraints.HORIZONTAL;
@@ -484,11 +536,16 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 				acctInfo.add(custNameTxt, c);
 
 				c.fill = GridBagConstraints.HORIZONTAL;
-				final JTextField custAddressTxt = new JTextField("");
 				c.gridx = 1;
 				c.gridy = 1;
 				c.insets = new Insets(5, 5, 5, 5);
-				acctInfo.add(custAddressTxt, c);
+				acctInfo.add(categoryBox, c);
+
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.gridx = 1;
+				c.gridy = 2;
+				c.insets = new Insets(5, 5, 5, 5);
+				acctInfo.add(companyBox, c);
 
 				closeBtn = new JButton("Anuluj");
 				c.gridx = 0;
@@ -508,6 +565,42 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						bankTeller.dispose();
+						newrow_flag = 0;
+					}
+				});
+
+				categoryBox.addItemListener(new ItemListener() {
+					public void itemStateChanged(ItemEvent event) {
+
+						JComboBox comboBox = (JComboBox) event.getSource();
+						Object item = event.getItem();
+						if (event.getStateChange() == ItemEvent.SELECTED
+								&& box_flag_category > 0) {
+							System.out.println(item.toString()
+									+ " selected!!!!!!!!!!!!");
+							Category selected_category = (Category) categoryBox
+									.getSelectedItem();
+							id_category = selected_category.getId();
+							System.out.println("Id kategorii:" + id_category);
+						}
+					}
+				});
+
+				companyBox.addItemListener(new ItemListener() {
+
+					public void itemStateChanged(ItemEvent event) {
+
+						JComboBox comboBox = (JComboBox) event.getSource();
+						Object item = event.getItem();
+						if (event.getStateChange() == ItemEvent.SELECTED
+								&& box_flag_company > 0) {
+							System.out.println(item.toString()
+									+ " selected!!!!!!!!!!!!");
+							Company selected_company = (Company) companyBox
+									.getSelectedItem();
+							id_company = selected_company.getId();
+							System.out.println("Id firmy:" + id_company);
+						}
 					}
 				});
 
@@ -517,17 +610,14 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					public void actionPerformed(ActionEvent e) {
 
 						String name = custNameTxt.getText();
-						String address = custAddressTxt.getText();
+						String address = "";
 
 						if (!name.isEmpty() && !address.isEmpty()) {
 							JOptionPane.showMessageDialog(View.this, "Dodano",
 									"Dodano", JOptionPane.INFORMATION_MESSAGE);
-
 							System.out.println(name + ": " + address);
-
 							fireCompanyEvent(new CompanyEvent(name, "firmy",
 									address, 0, "add"));
-
 						} else {
 							JOptionPane.showMessageDialog(View.this,
 									"Uzupe³nij pole nazwa", "Uzupe³nij pole",
@@ -535,6 +625,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 						}
 					}
 				});
+
 			}
 		});
 
@@ -548,34 +639,6 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		card3.add(itemScroll);
 		card3.add(controls);
 
-	}
-
-	public void deleteAction(final JTable Jb, final String table) {
-
-		deletebutton.setEnabled(false);
-		Jb.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				deletebutton.setEnabled(true);
-			}
-		});
-
-		deletebutton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int selRow = (Integer) Jb.getValueAt(Jb.getSelectedRow(), 0);
-				if (selRow >= 0) {
-					System.out.println(selRow);
-					if (table == "kategorie") {
-						fireDeleteEvent(new CompanyEvent(null, "kategorie",
-								null, selRow, ""), "kategorie");
-					} else if (table == "firmy") {
-						fireDeleteEvent(new CompanyEvent(null, "firmy", null,
-								selRow, ""), "firmy");
-					}
-				}
-			}
-		});
 	}
 
 	@Override
@@ -602,8 +665,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 				if (c instanceof JComponent) {
 					JComponent jc = (JComponent) c;
 					if (column != 0) {
-						jc.setToolTipText("Edytuj: "
-								+ getValueAt(row, column).toString());
+						// jc.setToolTipText("Edytuj: "
+						// + getValueAt(row, column).toString());
 					}
 				}
 				return c;
