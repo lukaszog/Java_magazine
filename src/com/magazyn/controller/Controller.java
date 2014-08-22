@@ -91,7 +91,12 @@ public class Controller implements CreateCategoryListener,
 		String value = event.getName();
 		if(type=="normal"){
 		String field = "nazwa";
+		String field2 ="id_firmy";
+		String field3 = "id_kategoria";
+		
 		valueMap.put(field, value);
+		valueMap.put(field2, event.getIdCompany());
+		valueMap.put(field3, event.getIdCategory());
 
 		}else if(type=="box"){
 			String field1 = "id_kategoria";
@@ -110,7 +115,7 @@ public class Controller implements CreateCategoryListener,
 	
 		try {
 			if (event.getAction() == "add") {
-			//	factory.question("insert", valueMap, table, 0);
+				factory.question("insert", valueMap, table, 0);
 			} else if (event.getAction() == "update") {
 				factory.question("update", valueMap, table, event.getId());
 			}

@@ -610,14 +610,15 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					public void actionPerformed(ActionEvent e) {
 
 						String name = custNameTxt.getText();
-						String address = "";
-
-						if (!name.isEmpty() && !address.isEmpty()) {
+						
+						if (!name.isEmpty()) {
 							JOptionPane.showMessageDialog(View.this, "Dodano",
 									"Dodano", JOptionPane.INFORMATION_MESSAGE);
-							System.out.println(name + ": " + address);
-							fireCompanyEvent(new CompanyEvent(name, "firmy",
-									address, 0, "add"));
+							fireItemEvent(new ItemsEvent(0,"produkty","","",name,id_category,id_company,"add"), "normal");
+							System.out.println("dodaje");
+							id_company=0;
+							id_category=0;
+							
 						} else {
 							JOptionPane.showMessageDialog(View.this,
 									"Uzupe³nij pole nazwa", "Uzupe³nij pole",
