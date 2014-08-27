@@ -24,11 +24,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import com.magazyn.controller.Controller;
+import com.magazyn.model.Client;
 import com.magazyn.model.Company;
 import com.magazyn.model.Database;
 import com.magazyn.model.Item;
 import com.magazyn.model.Model;
 import com.magazyn.model.Category;
+import com.magazyn.model.Order;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -48,7 +50,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 public class View extends JFrame implements ActionListener, CategoryListener,
-		CompanyListener, ClientsListener, ItemsListener {
+		CompanyListener, ClientsListener, ItemsListener, OrderListener {
 
 	/**
 	 * 
@@ -66,37 +68,48 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 	private JPanel card1 = new JPanel();
 	private JPanel card2 = new JPanel();
 	private JPanel card3 = new JPanel();
-	private JPanel card4, card5, card6 = new JPanel();
+	private JPanel card4 = new JPanel();
+	private JPanel card5 = new JPanel();
+	private JPanel card6 = new JPanel();
 	private JTable jTable1 = new JTable();
 	private JTable companyTable = new JTable();
 	private JTable itemTable = new JTable();
+	private JTable clientTable = new JTable();
+	private JTable orderTable = new JTable();
 	private JScrollPane itemScroll = new JScrollPane();
 	private JScrollPane companyScroll = new JScrollPane();
+	private JScrollPane clientScroll = new JScrollPane();
+	private JScrollPane orderScroll = new JScrollPane();
 	private JScrollPane scroll = new JScrollPane();
 	private DefaultTableModel tablemodel = new DefaultTableModel();
 	private DefaultTableModel companymodel = new DefaultTableModel();
+	private DefaultTableModel clientmodel = new DefaultTableModel();
 	private DefaultTableModel itemmodel = new DefaultTableModel();
+	private DefaultTableModel ordermodel = new DefaultTableModel();
 	private JComboBox<Category> categoryBox = new JComboBox<Category>();
 	private JComboBox<Company> companyBox = new JComboBox<Company>();
 	private JPanel controls = new JPanel();
 	private JPanel buttons = new JPanel();
 	private JButton newrow = new JButton();
 	private JButton print = new JButton();
-	private JButton deletebutton = new JButton("Usuñ");
+	private JButton deletebutton = new JButton("Usuï¿½");
 	private List<Category> people;
 	private List<Company> company;
+	private List<Client> client;
 	private List<Item> item;
+	private List<Order> order;
 	private int item_box_flag = 0;
 	private int box_flag_item = 0;
 	private int box_flag_category = 0;
 	private int box_flag_company;
 	private int newrow_flag = 0;
 
-	int categoryflag = 0, companyflag = 0, clientflag = 0, itemflag = 0;
+	int categoryflag = 0, companyflag = 0, clientflag = 0, itemflag = 0,
+			orderflag = 0;
 	private int id_category;
 	private int id_company;
-	private int id;
-
+private int id;
+	
 	public View() throws HeadlessException {
 
 		super("Magazyn");
@@ -137,7 +150,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					Database.getInstance().disconnect();
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(View.this,
-							"Nie mo¿na zakonczyæ po³¹czenia z baza danych",
+							"Nie moï¿½na zakonczyï¿½ poï¿½ï¿½czenia z baza danych",
 							"Error", JOptionPane.WARNING_MESSAGE);
 				}
 			}
@@ -165,7 +178,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		tabbedPane.addTab("Lista kategorii", card1);
 		tabbedPane.addTab("Lista firm", card2);
 		tabbedPane.addTab("Produkty", card3);
-		tabbedPane.addTab("Zamówienia", card4);
+		tabbedPane.addTab("Zamï¿½wienia", card4);
 		tabbedPane.addTab("Klienci", card5);
 		tabbedPane.addTab("Informacje", card6);
 
@@ -193,6 +206,16 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 						itemShow();
 						itemflag = 1;
 					}
+					break;
+				case 3:
+					System.out.println("Case 3");
+					if (orderflag == 0) {
+						orderShow();
+						orderflag = 1;
+					}
+					break;
+				case 4:
+
 					break;
 				}
 			}
@@ -237,7 +260,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 				if (table.getCellEditor() != null) {
 
 					int col = table.getSelectedColumn();
-					id = (int) table.getValueAt(table.getSelectedRow(), 0);
+					id =  (int) table.getValueAt(table.getSelectedRow(), 0);
 
 					if (col != 0) {
 						if (table == jTable1) {
@@ -322,6 +345,20 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 	}
 
+	public void loadClient() {
+
+		clientmodel.setRowCount(0);
+		client = model.getClient();
+
+		System.out.println("jestem w load kategorie");
+
+		for (Client cli : client) {
+			clientmodel.addRow(new Object[] { cli.getId(), cli.getName() });
+		}
+		client.clear();
+
+	}
+
 	public void loadCompany() {
 		// TODO Auto-generated method stub
 
@@ -341,6 +378,27 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 	}
 
+	public void loadOrder() {
+
+		ordermodel.setRowCount(0);
+		order = model.getOrder();
+		String done = "";
+
+		for (Order ord : order) {
+
+			if (ord.getDone() == 1) {
+				done = "Zrealizowano";
+			} else {
+				done = "Brak realizacji";
+			}
+			ordermodel.addRow(new Object[] { ord.getId(), ord.getClient_name(),
+					ord.getClient_lastname(), ord.getAddress(),
+					ord.getProduct(), done });
+		}
+		order.clear();
+
+	}
+
 	public void loadItem() {
 
 		itemmodel.setRowCount(0);
@@ -349,7 +407,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 		for (Category person : people) {
 			categoryBox.addItem(new Category(person.getId(), person.getName()));
-			System.out.println("dodaje kategorie do boxa");
+			// System.out.println("dodaje kategorie do boxa");
 		}
 		people.clear();
 		for (Item ite : item) {
@@ -358,6 +416,178 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 			System.out.println("dodaje itemy do boxa");
 		}
 		item.clear();
+	}
+
+	public void orderShow() {
+
+		appListener.getOrder();
+
+		
+		orderTable = new JTable(ordermodel) {
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				if (column == 0) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int Index_row, int Index_col) {
+				Component comp = super.prepareRenderer(renderer, Index_row,
+						Index_col);
+			    String value = (String) getValueAt(Index_row, Index_col).toString();
+			  
+				// even index, selected or not selected
+				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+					comp.setBackground(Color.lightGray);
+				} else {
+					comp.setBackground(Color.white);
+				}
+				if(value.equals("Brak realizacji")){
+			    	comp.setBackground(Color.red);
+			    }else if(value.equals("Zrealizowano")){
+			    	comp.setBackground(Color.GREEN);
+			    }
+				return comp;
+			}
+
+		};
+
+		orderScroll = new JScrollPane(orderTable);
+		ordermodel.addColumn("ID");
+		ordermodel.addColumn("Imie");
+		ordermodel.addColumn("Nazwisko");
+		ordermodel.addColumn("Adres");
+		ordermodel.addColumn("Produkt");
+		ordermodel.addColumn("Realizacja");
+
+		orderTable.setRowHeight(20);
+		TableColumnModel tcm = orderTable.getColumnModel();
+		tcm.getColumn(0).setMaxWidth(50);
+		orderTable.getTableHeader().setFont(new Font("Arial", 0, 15));
+
+		tableEdit(orderTable); // edycja tabeli
+
+		controls = new JPanel(new BorderLayout(5, 5));
+		buttons = new JPanel(new GridLayout(0, 1, 4, 4));
+		newrow = new JButton("Dodaj");
+		print = new JButton("Drukuj");
+		deletebutton = new JButton("Usuï¿½");
+		deleteAction(orderTable, "firmy");
+
+		newrow.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				final JFrame bankTeller = new JFrame("Dodaj nowï¿½ firmï¿½");
+				bankTeller.setSize(500, 280);
+				bankTeller.setLocationRelativeTo(null);
+				bankTeller.setResizable(false);
+				bankTeller.setLayout(new GridBagLayout());
+
+				bankTeller.setBackground(Color.gray);
+				GridBagConstraints c = new GridBagConstraints();
+
+				JPanel acctInfo = new JPanel(new GridBagLayout());
+				c.gridx = 0;
+				c.gridy = 0;
+				c.gridwidth = 2;
+				c.gridheight = 1;
+				c.insets = new Insets(5, 5, 5, 5);
+				bankTeller.add(acctInfo, c);
+				c.gridwidth = 1;
+
+				JLabel custNameLbl = new JLabel("Nazwa firmy");
+				c.gridx = 0;
+				c.gridy = 0;
+				c.insets = new Insets(0, 0, 0, 0);
+				acctInfo.add(custNameLbl, c);
+				c.weightx = 1.;
+
+				JLabel custAddressLbl = new JLabel("Adres firmy");
+				c.gridx = 0;
+				c.gridy = 1;
+				c.insets = new Insets(0, 0, 0, 0);
+				acctInfo.add(custAddressLbl, c);
+				c.weightx = 1.;
+
+				c.fill = GridBagConstraints.HORIZONTAL;
+				custNameTxt = new JTextField("", 1000);
+				c.gridx = 1;
+				c.gridy = 0;
+				c.insets = new Insets(5, 5, 5, 5);
+				acctInfo.add(custNameTxt, c);
+
+				c.fill = GridBagConstraints.HORIZONTAL;
+				final JTextField custAddressTxt = new JTextField("");
+				c.gridx = 1;
+				c.gridy = 1;
+				c.insets = new Insets(5, 5, 5, 5);
+				acctInfo.add(custAddressTxt, c);
+
+				closeBtn = new JButton("Anuluj");
+				c.gridx = 0;
+				c.gridy = 3;
+				c.insets = new Insets(5, 5, 5, 5);
+				acctInfo.add(closeBtn, c);
+
+				savingsBtn = new JButton("Dodaj");
+				c.gridx = 1;
+				c.gridy = 3;
+				c.insets = new Insets(5, 5, 5, 5);
+				acctInfo.add(savingsBtn, c);
+
+				bankTeller.setVisible(true);
+
+				closeBtn.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						bankTeller.dispose();
+					}
+				});
+
+				savingsBtn.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+
+						String name = custNameTxt.getText();
+						String address = custAddressTxt.getText();
+
+						if (!name.isEmpty() && !address.isEmpty()) {
+							JOptionPane.showMessageDialog(View.this, "Dodano",
+									"Dodano", JOptionPane.INFORMATION_MESSAGE);
+
+							System.out.println(name + ": " + address);
+
+							fireCompanyEvent(new CompanyEvent(name, "firmy",
+									address, 0, "add"));
+
+						} else {
+							JOptionPane.showMessageDialog(View.this,
+									"Uzupeï¿½nij pole nazwa", "Uzupeï¿½nij pole",
+									JOptionPane.WARNING_MESSAGE);
+						}
+					}
+				});
+			}
+		});
+
+		buttons.add(newrow);
+		buttons.add(deletebutton);
+		buttons.add(print);
+		buttons.setBorder(new TitledBorder("Zarzï¿½dzaj"));
+
+		controls.add(buttons, BorderLayout.NORTH);
+
+		card4.add(orderScroll);
+		card4.add(controls);
+
 	}
 
 	@Override
@@ -381,16 +611,16 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 			}
 
 			public Component prepareRenderer(TableCellRenderer renderer,
-					int row, int column) {
-				Component c = super.prepareRenderer(renderer, row, column);
-				if (c instanceof JComponent) {
-					JComponent jc = (JComponent) c;
-					if (column != 0) {
-						// jc.setToolTipText("Edytuj: "
-						// + getValueAt(row, column).toString());
-					}
+					int Index_row, int Index_col) {
+				Component comp = super.prepareRenderer(renderer, Index_row,
+						Index_col);
+				// even index, selected or not selected
+				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+					comp.setBackground(Color.lightGray);
+				} else {
+					comp.setBackground(Color.white);
 				}
-				return c;
+				return comp;
 			}
 		};
 
@@ -476,7 +706,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		buttons = new JPanel(new GridLayout(0, 1, 4, 4));
 		newrow = new JButton("Dodaj");
 		print = new JButton("Drukuj");
-		deletebutton = new JButton("Usuñ");
+		deletebutton = new JButton("Usuï¿½");
 		deleteAction(itemTable, "produkty");
 
 		newrow.addActionListener(new ActionListener() {
@@ -484,7 +714,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				final JFrame bankTeller = new JFrame("Dodaj now¹ firmê");
+				final JFrame bankTeller = new JFrame("Dodaj nowï¿½ firmï¿½");
 				bankTeller.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				bankTeller.getRootPane().setWindowDecorationStyle(
 						JRootPane.NONE);
@@ -610,18 +840,20 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					public void actionPerformed(ActionEvent e) {
 
 						String name = custNameTxt.getText();
-						
+
 						if (!name.isEmpty()) {
 							JOptionPane.showMessageDialog(View.this, "Dodano",
 									"Dodano", JOptionPane.INFORMATION_MESSAGE);
-							fireItemEvent(new ItemsEvent(0,"produkty","","",name,id_category,id_company,"add"), "normal");
+							fireItemEvent(new ItemsEvent(0, "produkty", "", "",
+									name, id_category, id_company, "add"),
+									"normal");
 							System.out.println("dodaje");
-							id_company=0;
-							id_category=0;
-							
+							id_company = 0;
+							id_category = 0;
+
 						} else {
 							JOptionPane.showMessageDialog(View.this,
-									"Uzupe³nij pole nazwa", "Uzupe³nij pole",
+									"Uzupeï¿½nij pole nazwa", "Uzupeï¿½nij pole",
 									JOptionPane.WARNING_MESSAGE);
 						}
 					}
@@ -633,7 +865,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		buttons.add(newrow);
 		buttons.add(deletebutton);
 		buttons.add(print);
-		buttons.setBorder(new TitledBorder("Zarz¹dzaj"));
+		buttons.setBorder(new TitledBorder("Zarzï¿½dzaj"));
 
 		controls.add(buttons, BorderLayout.NORTH);
 
@@ -661,16 +893,16 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 			}
 
 			public Component prepareRenderer(TableCellRenderer renderer,
-					int row, int column) {
-				Component c = super.prepareRenderer(renderer, row, column);
-				if (c instanceof JComponent) {
-					JComponent jc = (JComponent) c;
-					if (column != 0) {
-						// jc.setToolTipText("Edytuj: "
-						// + getValueAt(row, column).toString());
-					}
+					int Index_row, int Index_col) {
+				Component comp = super.prepareRenderer(renderer, Index_row,
+						Index_col);
+				// even index, selected or not selected
+				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+					comp.setBackground(Color.lightGray);
+				} else {
+					comp.setBackground(Color.white);
 				}
-				return c;
+				return comp;
 			}
 		};
 
@@ -689,7 +921,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		buttons = new JPanel(new GridLayout(0, 1, 4, 4));
 		newrow = new JButton("Dodaj");
 		print = new JButton("Drukuj");
-		deletebutton = new JButton("Usuñ");
+		deletebutton = new JButton("Usuï¿½");
 		deleteAction(companyTable, "firmy");
 
 		newrow.addActionListener(new ActionListener() {
@@ -697,7 +929,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				final JFrame bankTeller = new JFrame("Dodaj now¹ firmê");
+				final JFrame bankTeller = new JFrame("Dodaj nowï¿½ firmï¿½");
 				bankTeller.setSize(500, 280);
 				bankTeller.setLocationRelativeTo(null);
 				bankTeller.setResizable(false);
@@ -783,7 +1015,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
 						} else {
 							JOptionPane.showMessageDialog(View.this,
-									"Uzupe³nij pole nazwa", "Uzupe³nij pole",
+									"Uzupeï¿½nij pole nazwa", "Uzupeï¿½nij pole",
 									JOptionPane.WARNING_MESSAGE);
 						}
 					}
@@ -794,7 +1026,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 		buttons.add(newrow);
 		buttons.add(deletebutton);
 		buttons.add(print);
-		buttons.setBorder(new TitledBorder("Zarz¹dzaj"));
+		buttons.setBorder(new TitledBorder("Zarzï¿½dzaj"));
 
 		controls.add(buttons, BorderLayout.NORTH);
 
@@ -818,7 +1050,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 				}
 			}
 
-			public Component prepareRenderer(TableCellRenderer renderer,
+			/*public Component prepareRenderer(TableCellRenderer renderer,
 					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 				if (c instanceof JComponent) {
@@ -829,7 +1061,19 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 					}
 				}
 				return c;
-			}
+			}*/
+			public Component prepareRenderer
+			  (TableCellRenderer renderer,int Index_row, int Index_col) {
+			  Component comp = super.prepareRenderer(renderer, Index_row, Index_col);
+			  //even index, selected or not selected
+			  if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+			  comp.setBackground(Color.lightGray);
+			  } 
+			  else {
+			  comp.setBackground(Color.white);
+			  }
+			  return comp;
+			  }
 		};
 		scroll = new JScrollPane(jTable1);
 
@@ -856,7 +1100,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 			buttons = new JPanel(new GridLayout(0, 1, 4, 4));
 			newrow = new JButton("Dodaj");
 			print = new JButton("Drukuj");
-			deletebutton = new JButton("Usuñ");
+			deletebutton = new JButton("Usuï¿½");
 
 			tableEdit(jTable1); // edycja tabeli
 
@@ -876,7 +1120,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					final JFrame bankTeller = new JFrame("Dodaj now¹ kategorie");
+					final JFrame bankTeller = new JFrame("Dodaj nowï¿½ kategorie");
 					bankTeller.setSize(500, 280);
 					bankTeller.setLocationRelativeTo(null);
 					bankTeller.setResizable(false);
@@ -944,8 +1188,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 										"kategorie", 0, "add"));
 							} else {
 								JOptionPane.showMessageDialog(View.this,
-										"Uzupe³nij pole nazwa",
-										"Uzupe³nij pole",
+										"Uzupeï¿½nij pole nazwa",
+										"Uzupeï¿½nij pole",
 										JOptionPane.WARNING_MESSAGE);
 							}
 						}
@@ -958,7 +1202,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 			buttons.add(newrow);
 			buttons.add(deletebutton);
 			buttons.add(print);
-			buttons.setBorder(new TitledBorder("Zarz¹dzaj"));
+			buttons.setBorder(new TitledBorder("Zarzï¿½dzaj"));
 
 			controls.add(buttons, BorderLayout.NORTH);
 

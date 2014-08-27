@@ -9,9 +9,11 @@ public class Order {
 	private String client_name;
 	private String client_lastname;
 	private String product;
+	private String address;
+	private int done;
 	
 	public Order(int id, String date, int id_client, int id_item,
-			String client_name, String client_lastname, String product) {
+			String client_name, String client_lastname, String product, String address, int done) {
 		this.id = id;
 		this.date = date;
 		this.id_client = id_client;
@@ -19,6 +21,24 @@ public class Order {
 		this.client_name = client_name;
 		this.client_lastname = client_lastname;
 		this.product = product;
+		this.address = address;
+		this.done = done;
+	}
+
+	public int getDone() {
+		return done;
+	}
+
+	public void setDone(int done) {
+		this.done = done;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public int getId() {

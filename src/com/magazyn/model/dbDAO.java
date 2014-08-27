@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.SwingWorker;
 
 public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
@@ -58,6 +59,9 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 			items = getItem();
 			System.out.println("za itemami");
 		}
+		if (table == "zamowienia") {
+			orders = getOrder();
+		}
 		return null;
 	}
 
@@ -76,9 +80,18 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 			model.setCompany(companies);
 			view.loadCompany();
 		}
-		if(table=="produkty"){
+		if (table == "produkty") {
 			model.setItem(items);
 			view.loadItem();
+		}
+		if (table == "zamowienia") {
+			model.setOrder(orders);
+			view.loadOrder();
+
+		}
+		if (table == "klienci") {
+			model.setClient(clients);
+			view.loadClient();
 		}
 	}
 
@@ -133,7 +146,39 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 	@Override
 	public List<Order> getOrder() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		List<Order> ord = new ArrayList<Order>();
+		Connection conn = Database.getInstance().getConnection();
+
+		String sql = "select Z.id,Z.data,Z.id_klienta,Z.id_produktu,Z.realizacja,"
+				+ "P.nazwa,K.imie,K.nazwisko,K.adres"
+				+ " from zamowienia Z"
+				+ " join klienci K on Z.id_klienta=K.id"
+				+ " join produkty P on Z.id_produktu=P.id;";
+
+		Statement selectStatement = conn.createStatement();
+		ResultSet results = selectStatement.executeQuery(sql);
+
+		while (results.next()) {
+			int id = results.getInt("Z.id");
+			String date = results.getString("Z.data");
+			int id_client = results.getInt("Z.id_klienta");
+			int id_item = results.getInt("Z.id_produktu");
+			String client_name = results.getString("K.imie");
+			String last_name = results.getString("K.nazwisko");
+			String product = results.getString("P.nazwa");
+			String address = results.getString("K.adres");
+			int done = results.getInt("Z.realizacja");
+
+			System.out.println("dodalem");
+			Order order = new Order(id, date, id_client, id_item, client_name,
+					last_name, product, address, done);
+			ord.add(order);
+
+		}
+		results.close();
+		selectStatement.close();
+
+		return ord;
 	}
 
 	@Override
