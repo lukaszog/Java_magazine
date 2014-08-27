@@ -1,20 +1,13 @@
 package com.magazyn.controller;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.magazyn.model.DAOFactory;
 import com.magazyn.model.Database;
 import com.magazyn.model.Model;
-import com.magazyn.view.AppListener;
-import com.magazyn.view.CategoryEvent;
-import com.magazyn.view.CompanyEvent;
-import com.magazyn.view.CreateCategoryListener;
-import com.magazyn.view.CreateCompanyListener;
-import com.magazyn.view.CreateItemListener;
-import com.magazyn.view.ItemsEvent;
-import com.magazyn.view.View;
+import com.magazyn.view.*;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Controller implements CreateCategoryListener,
 		CreateCompanyListener,CreateItemListener, AppListener {
