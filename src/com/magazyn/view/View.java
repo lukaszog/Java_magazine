@@ -260,7 +260,7 @@ private int id;
 				if (table.getCellEditor() != null) {
 
 					int col = table.getSelectedColumn();
-					id =  (int) table.getValueAt(table.getSelectedRow(), 0);
+					id =  Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 
 					if (col != 0) {
 						if (table == jTable1) {
@@ -413,7 +413,7 @@ private int id;
 		for (Item ite : item) {
 			itemmodel.addRow(new Object[] { ite.getId(), ite.getName(),
 					ite.getCategory(), ite.getCompany() });
-			System.out.println("dodaje itemy do boxa");
+			//System.out.println("dodaje itemy do boxa");
 		}
 		item.clear();
 	}
@@ -656,16 +656,17 @@ private int id;
 						Category selected_category = (Category) categoryBox
 								.getSelectedItem();
 
-						int rowid = (int) itemTable.getValueAt(
-								itemTable.getSelectedRow(), 0);
+                        int idd = Integer.parseInt(itemTable.getValueAt(itemTable.getSelectedRow(), 0).toString());
 
-						id_category = selected_category.getId();
+
+                        id_category = selected_category.getId();
 						System.out.println("Id kategorii:" + id_category
-								+ "Id wiersza: " + id);
+								+ "Id wiersza: " + idd);
 
-						fireItemEvent(new ItemsEvent(rowid, "produkty", null,
+						fireItemEvent(new ItemsEvent(idd, "produkty", null,
 								null, null, id_category, id_company, "update"),
 								"box_category");
+
 
 					}
 					box_flag_category++;
@@ -686,14 +687,14 @@ private int id;
 						Company selected_company = (Company) companyBox
 								.getSelectedItem();
 
-						int rowid = (int) itemTable.getValueAt(
-								itemTable.getSelectedRow(), 0);
+                        int idd = Integer.parseInt(itemTable.getValueAt(itemTable.getSelectedRow(), 0).toString());
+
 
 						id_company = selected_company.getId();
 						System.out.println("Id kategorii:" + id_category
-								+ "Id wiersza: " + id);
+								+ "Id wiersza: " + idd);
 
-						fireItemEvent(new ItemsEvent(rowid, "produkty", null,
+						fireItemEvent(new ItemsEvent(idd, "produkty", null,
 								null, null, id_category, id_company, "update"),
 								"box_company");
 
@@ -714,7 +715,7 @@ private int id;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				final JFrame bankTeller = new JFrame("Dodaj now� firm�");
+				final JFrame bankTeller = new JFrame("Dodaj nowy produkt");
 				bankTeller.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				bankTeller.getRootPane().setWindowDecorationStyle(
 						JRootPane.NONE);

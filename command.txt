@@ -1,0 +1,1 @@
+javac -d bin src\com\magazyn\view\*.java src\com\magazyn\model\*.java src\com\magazyn\controller\*.java src\com\magazyn\app\*.java

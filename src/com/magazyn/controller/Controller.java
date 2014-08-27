@@ -98,6 +98,8 @@ public class Controller implements CreateCategoryListener,
 		valueMap.put(field2, event.getIdCompany());
 		valueMap.put(field3, event.getIdCategory());
 
+            System.out.println(event.getIdCompany());
+
 		}else if(type=="box"){
 			String field1 = "id_kategoria";
 			String field2 = "id_firmy";

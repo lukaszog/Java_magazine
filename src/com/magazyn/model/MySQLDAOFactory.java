@@ -46,9 +46,12 @@ public class MySQLDAOFactory extends DAOFactory {
 		query = "delete from "+table+" where id="+id;
 		PreparedStatement add = conn.prepareStatement(query);
 		int delete = add.executeUpdate();
+
+        System.out.println(query);
 		
 		add.close();
-		return delete;	
+		return delete;
+
 	}
 
 	@Override
@@ -62,6 +65,7 @@ public class MySQLDAOFactory extends DAOFactory {
 		if (type == "insert") {
 			query = "insert into " + table + "(" + val + ") values ("
 					+ question + ")";
+            System.out.println(question);
 		} else if (type == "update") {
 			query = "update " + table + " set " + updateval + " where id = "
 					+ id;
@@ -72,6 +76,7 @@ public class MySQLDAOFactory extends DAOFactory {
 		for (Map.Entry<Object, Object> entry : valueMap.entrySet()) {
 			add.setObject(x, entry.getValue());
 			x += 1;
+            System.out.println(entry.getValue());
 		}
 		int addtotable = add.executeUpdate();
 		add.close();
