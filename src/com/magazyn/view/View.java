@@ -31,6 +31,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 	private JButton savingsBtn;
 	private CreateCategoryListener categoryListener;
 	private CreateCompanyListener companyListener;
+    private CreateOrderListener orderListener;
 	private CreateItemListener itemListener;
 	private JTabbedPane tabbedPane = new JTabbedPane();
 	private JPanel card1 = new JPanel();
@@ -60,7 +61,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 	private JPanel buttons = new JPanel();
 	private JButton newrow = new JButton();
 	private JButton print = new JButton();
-	private JButton deletebutton = new JButton("Usu�");
+	private JButton deletebutton = new JButton("Usuń");
+    private JButton acceptbutton  = new JButton("Akceptuj");
 	private List<Category> people;
 	private List<Company> company;
 	private List<Client> client;
@@ -291,7 +293,9 @@ private int id;
 						System.out.println("Produkty: " + selRow);
 						fireDeleteEvent(new CompanyEvent(null, "produkty",
 								null, selRow, ""), "produkty");
-					}
+					}else if(table =="zamowienia"){
+                        fireDeleteEvent(new CompanyEvent(null,"zamowienia",null,selRow,""),"zamowienia");
+                    }
 				}
 
 			}
@@ -359,7 +363,7 @@ private int id;
 			} else {
 				done = "Brak realizacji";
 			}
-			ordermodel.addRow(new Object[] { ord.getId(), ord.getClient_name(),
+			ordermodel.addRow(new Object[] { ord.getId(), ord.getDate(), ord.getClient_name(),
 					ord.getClient_lastname(), ord.getAddress(),
 					ord.getProduct(), done });
 		}
@@ -427,6 +431,7 @@ private int id;
 
 		orderScroll = new JScrollPane(orderTable);
 		ordermodel.addColumn("ID");
+        ordermodel.addColumn("Data");
 		ordermodel.addColumn("Imie");
 		ordermodel.addColumn("Nazwisko");
 		ordermodel.addColumn("Adres");
@@ -444,8 +449,32 @@ private int id;
 		buttons = new JPanel(new GridLayout(0, 1, 4, 4));
 		newrow = new JButton("Dodaj");
 		print = new JButton("Drukuj");
-		deletebutton = new JButton("Usu�");
-		deleteAction(orderTable, "firmy");
+        acceptbutton = new JButton("Akceptuj");
+		deletebutton = new JButton("Usuń");
+		deleteAction(orderTable, "zamowienia");
+
+
+        acceptbutton.setEnabled(false);
+        orderTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                acceptbutton.setEnabled(true);
+            }
+        });
+
+        acceptbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selRow = (Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 0);
+                if (selRow >= 0) {
+                    System.out.println(selRow);
+                    fireOrderEvent(new OrderEvent(selRow, "zamowienia",
+                            1, "update"));
+
+                }
+
+            }
+        });
 
 		newrow.addActionListener(new ActionListener() {
 
@@ -534,7 +563,7 @@ private int id;
 							System.out.println(name + ": " + address);
 
 							fireCompanyEvent(new CompanyEvent(name, "firmy",
-									address, 0, "add"));
+                                    address, 0, "add"));
 
 						} else {
 							JOptionPane.showMessageDialog(View.this,
@@ -547,9 +576,10 @@ private int id;
 		});
 
 		buttons.add(newrow);
+        buttons.add(acceptbutton);
 		buttons.add(deletebutton);
 		buttons.add(print);
-		buttons.setBorder(new TitledBorder("Zarz�dzaj"));
+		buttons.setBorder(new TitledBorder("Zarządzaj"));
 
 		controls.add(buttons, BorderLayout.NORTH);
 
@@ -1193,6 +1223,9 @@ private int id;
 		this.itemListener = itemListener;
 
 	}
+    public void setOrderListener(CreateOrderListener orderListener){
+        this.orderListener = orderListener;
+    }
 
 	public void fireCategoryEvent(CategoryEvent event) {
 		if (categoryListener != null) {
@@ -1215,5 +1248,10 @@ private int id;
 			itemListener.addItem(event, type);
 		}
 	}
+    public void fireOrderEvent(OrderEvent event){
+        if(orderListener != null){
+            orderListener.addOrder(event);
+        }
+    }
 
 }

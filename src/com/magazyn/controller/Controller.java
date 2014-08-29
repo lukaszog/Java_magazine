@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Controller implements CreateCategoryListener,
-		CreateCompanyListener,CreateItemListener, AppListener {
+		CreateCompanyListener,CreateItemListener, AppListener, CreateOrderListener {
 
 	private View view;
 	private Model model;
 
-	public Controller(View view, Model model) throws SQLException, Exception {
+    public Controller(View view, Model model) throws SQLException, Exception {
 
 		this.view = view;
 		this.model = model;
@@ -70,11 +70,42 @@ public class Controller implements CreateCategoryListener,
 				model.loadCompany(view);
 			} else if(table == "produkty"){
 				model.loadItem(view);
-			}
+			}else if(table == "zamowienia"){
+                model.loadOrder(view);
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+    @Override
+    public void addOrder(OrderEvent event) {
+
+        Map<Object, Object> valueMap = new HashMap<Object, Object>();
+        DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
+        String table = event.getTable();
+         int realisation = event.getValue();
+        String field = "realizacja";
+
+        valueMap.put(field, realisation);
+
+        try {
+            if (event.getAction() == "add") {
+                factory.question("insert", valueMap, table, 0);
+            } else if (event.getAction() == "update") {
+                factory.question("update", valueMap, table, event.getId());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            model.loadOrder(view);
+            System.out.println("odswiezam");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 	@Override
 	public void addItem(ItemsEvent event, String type) {
 		// TODO Auto-generated method stub
@@ -212,4 +243,6 @@ public class Controller implements CreateCategoryListener,
 	public void onClose() {
 		Database.getInstance().disconnect();
 	}
+
+
 }
