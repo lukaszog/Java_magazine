@@ -17,17 +17,28 @@ import java.awt.event.*;
 import java.awt.print.PrinterException;
 import java.util.List;
 
-public class View extends JFrame implements ActionListener, CategoryListener,
+
+/**
+ * @author Łukasz Ogan
+ * @see com.magazyn.view.CategoryListener
+ * @see com.magazyn.view.ClientsListener
+ * @see com.magazyn.view.CompanyListener
+ * @see com.magazyn.view.CompanyListener
+ * @see com.magazyn.view.ItemsListener
+ * @see com.magazyn.view.OrderListener
+ *
+ * Klasa Viev.java z pakietu view odpowiedzialna jest za
+ * wygenereowanie widoków dla poszczególnych kart w aplikacji
+ * klasa komunikuje się z kontrolerem (Controller.java z pakietu controller)
+ * Kontroler ma za zadanie pobranie informacji z modelu, docelowe infromacje trafiają do widoku
+ *
+ *
+ */
+
+public class View extends JFrame implements CategoryListener,
         CompanyListener, ClientsListener, ItemsListener, OrderListener {
 
-    /**
-     * Klasa Viev.java z pakietu view odpowiedzialna jest za
-     * wygenereowanie widoków dla poszczególnych kart w aplikacji
-     * klasa komunikuje się z kontrolerem (Controller.java z pakietu controller)
-     * Kontroler ma za zadanie pobranie informacji z modelu, docelowe infromacje trafiają do widoku
-     *
-     *
-     */
+
     private static final long serialVersionUID = 1L;
     private Model model; /** Odwołanie do modelu */
     private AppListener appListener; /** Odwołanie do głównego Listenera aplikacji */
@@ -96,13 +107,15 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param model
+     * @param model this method setting model
+     *
      */
     public void setModel(Model model) {
         this.model = model;
     }
 
     /**
+     * This method initialize view and prepare GUI
      *
      */
     public void initializeView() {
@@ -118,7 +131,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param e
+             * @param e windowOpened argument
              */
             public void windowOpened(WindowEvent e) {
                 fireOpenEvent();
@@ -135,7 +148,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param e
+             * @param e windowClosing argument
              */
             public void windowClosing(WindowEvent e) {
                 fileCloseEvent();
@@ -153,6 +166,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * Open application status
      *
      */
     private void fireOpenEvent() {
@@ -164,7 +178,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
-     *
+     * Close aplication status
      */
     private void fileCloseEvent() {
         // TODO Auto-generated method stub
@@ -175,7 +189,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param pane
+     * @param pane addComponentToPane argument
      */
     public void addComponentToPane(Container pane) {
 
@@ -184,13 +198,12 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         tabbedPane.addTab("Produkty", card3);
         tabbedPane.addTab("Zamówienia", card4);
         tabbedPane.addTab("Klienci", card5);
-        tabbedPane.addTab("Informacje", card6);
 
         tabbedPane.addChangeListener(new ChangeListener() {
 
             /**
              *
-             * @param event
+             * @param event stateChanged argument
              */
             @Override
             public void stateChanged(ChangeEvent event) {
@@ -248,7 +261,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param appListener
+     * @param appListener argument for setAppListener method
      */
     public void setAppListener(AppListener appListener) {
         this.appListener = appListener;
@@ -256,26 +269,16 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param string
+     * @param string argument for showError method
      */
     public void showError(String string) {
         // TODO Auto-generated method stub
         System.out.println(string);
 
     }
-
     /**
      *
-     * @param e
-     */
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     *
-     * @param table
+     * @param table argument for tableEdit to set JTable to editing
      */
     public void tableEdit(final JTable table) {
 
@@ -283,7 +286,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         table.getModel().addTableModelListener(new TableModelListener() {
             /**
              *
-             * @param e
+             * @param e tableChanged agument
              */
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -331,8 +334,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param Jb
-     * @param table
+     * @param Jb JTable name
+     * @param table table name
      */
     public void deleteAction(final JTable Jb, final String table) {
 
@@ -340,7 +343,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         Jb.addMouseListener(new MouseAdapter() {
             /**
              *
-             * @param e
+             * @param e mouse Clicked argument
              */
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -351,7 +354,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         deletebutton.addActionListener(new ActionListener() {
             /**
              *
-             * @param e
+             * @param e actionPerformed argument
              */
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -378,6 +381,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * Thos method load data from model - category table
+     *
      *
      */
     public void loadData() {
@@ -385,7 +390,6 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         tablemodel.setRowCount(0);
         people = model.getPeople();
 
-        System.out.println("jestem w load kategorie");
         int lp=1;
 
         for (Category person : people) {
@@ -398,6 +402,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * This method load data from model - client table
      *
      */
     public void loadClient() {
@@ -407,7 +412,6 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
         int lp = 1;
 
-        System.out.println("jestem w load kategorie");
 
         for (Client cli : client) {
             clientmodel.addRow(new Object[] {lp,  cli.getId(), cli.getName(),cli.getLastname(),cli.getAddress() });
@@ -418,12 +422,12 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * This method load data from model - company table
      *
      */
     public void loadCompany() {
         // TODO Auto-generated method stub
 
-        System.out.println("Jestem w load Company");
         companymodel.setRowCount(0);
         company = model.getCompany();
 
@@ -435,13 +439,13 @@ public class View extends JFrame implements ActionListener, CategoryListener,
             companyBox.addItem(new Company(comp.getId(), comp.getName(), comp
                     .getAddress()));
             lp++;
-            // System.out.println(comp.getAddress());
         }
         company.clear();
 
     }
 
     /**
+     * This method load data from model - order table
      *
      */
     public void loadOrder() {
@@ -468,6 +472,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * This method load data from model - item table
      *
      */
     public void loadItem() {
@@ -493,6 +498,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * This method present clients in JTable
      *
      */
     public void clientsShow() {
@@ -530,7 +536,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         clientTable.addMouseListener(new MouseAdapter() {
             /**
              *
-             * @param e
+             * @param e mouseClicked argument
              */
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -554,6 +560,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * This method present orders in JTable
      *
      */
     public void orderShow() {
@@ -567,8 +574,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param row
-             * @param column
+             * @param row numer of row in JTable
+             * @param column numer of column in JTable
              * @return
              */
             public boolean isCellEditable(int row, int column) {
@@ -581,10 +588,10 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param renderer
-             * @param Index_row
-             * @param Index_col
-             * @return
+             * @param renderer TableCellRenderer
+             * @param Index_row index_row number
+             * @param Index_col index_col number
+             * @return return Componenet
              */
             public Component prepareRenderer(TableCellRenderer renderer,
                                              int Index_row, int Index_col) {
@@ -641,7 +648,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         orderTable.addMouseListener(new MouseAdapter() {
             /**
              *
-             * @param e
+             * @param e mouseClicked argument
              */
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -652,7 +659,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         acceptbutton.addActionListener(new ActionListener() {
             /**
              *
-             * @param e
+             * @param e actionPerformed argument
              */
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -671,7 +678,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param e
+             * @param e actionPerformed argument
              */
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -739,7 +746,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
                 closeBtn.addActionListener(new ActionListener() {
                     /**
                      *
-                     * @param e
+                     * @param e actionPerformed argument
                      */
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -751,7 +758,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
                     /**
                      *
-                     * @param e
+                     * @param e actionPerformed argument
                      */
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -792,6 +799,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * This method present items in JTable
      *
      */
     @Override
@@ -806,8 +814,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param row
-             * @param column
+             * @param row row number
+             * @param column column number
              * @return
              */
             public boolean isCellEditable(int row, int column) {
@@ -820,10 +828,10 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param renderer
-             * @param Index_row
-             * @param Index_col
-             * @return
+             * @param renderer TableCellRenderer
+             * @param Index_row index_row number
+             * @param Index_col index_col number
+             * @return return Componenet
              */
             public Component prepareRenderer(TableCellRenderer renderer,
                                              int Index_row, int Index_col) {
@@ -864,7 +872,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
         categoryBox.addItemListener(new ItemListener() {
             /**
              *
-             * @param event
+             * @param event itemStateChanged argument
              */
             public void itemStateChanged(ItemEvent event) {
                 if (newrow_flag == 0) {
@@ -899,7 +907,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param event
+             * @param event itemStateChanged argument
              */
             public void itemStateChanged(ItemEvent event) {
                 if (newrow_flag == 0) {
@@ -939,7 +947,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param e
+             * @param e actionPerformed argument
              */
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1024,7 +1032,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
                 closeBtn.addActionListener(new ActionListener() {
                     /**
                      *
-                     * @param e
+                     * @param e actionPerformed argument
                      */
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -1036,7 +1044,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
                 categoryBox.addItemListener(new ItemListener() {
                     /**
                      *
-                     * @param event
+                     * @param event itemStateChanged argument
                      */
                     public void itemStateChanged(ItemEvent event) {
 
@@ -1058,7 +1066,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
                     /**
                      *
-                     * @param event
+                     * @param event itemStateChanged argument
                      */
                     public void itemStateChanged(ItemEvent event) {
 
@@ -1079,7 +1087,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
                 savingsBtn.addActionListener(new ActionListener() {
                     /**
                      *
-                     * @param e
+                     * @param e actionPerformed argument
                      */
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -1120,12 +1128,12 @@ public class View extends JFrame implements ActionListener, CategoryListener,
     }
 
     /**
+     * This method present companyies in JTable
      *
      */
     @Override
     public void companyShow() {
         // TODO Auto-generated method stub
-        System.out.println("elo");
         appListener.getCompany();
 
         companyTable = new JTable(companymodel) {
@@ -1134,9 +1142,9 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param row
-             * @param column
-             * @return
+             * @param row row number
+             * @param column column number
+             * @return true or false
              */
             public boolean isCellEditable(int row, int column) {
                 if (column == 0 || column == 1) {
@@ -1148,10 +1156,10 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param renderer
-             * @param Index_row
-             * @param Index_col
-             * @return
+             * @param renderer TableCellRenderer
+             * @param Index_row index_row number
+             * @param Index_col index_col number
+             * @return return Compononet
              */
             public Component prepareRenderer(TableCellRenderer renderer,
                                              int Index_row, int Index_col) {
@@ -1193,7 +1201,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param e
+             * @param e actionPerformed argument
              */
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1261,7 +1269,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
                 closeBtn.addActionListener(new ActionListener() {
                     /**
                      *
-                     * @param e
+                     * @param e actionPerformed argument
                      */
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -1273,7 +1281,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
                     /**
                      *
-                     * @param e
+                     * @param e actionPerformed argument
                      */
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -1325,9 +1333,9 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param row
-             * @param column
-             * @return
+             * @param row row number
+             * @param column column number
+             * @return return true or false
              */
             public boolean isCellEditable(int row, int column) {
                 if (column == 0 || column == 1) {
@@ -1352,16 +1360,15 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
             /**
              *
-             * @param renderer
-             * @param Index_row
-             * @param Index_col
-             * @return
+             * @param renderer TableCellRenderer
+             * @param Index_row index_row number
+             * @param Index_col index_col number
+             * @return return Component
              */
             public Component prepareRenderer
             (TableCellRenderer renderer,int Index_row, int Index_col) {
                 Component comp = super.prepareRenderer(renderer, Index_row, Index_col);
-                //even index, selected or not selected
-                if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+                 if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
                     comp.setBackground(Color.lightGray);
                 }
                 else {
@@ -1405,7 +1412,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
             print.addActionListener(new ActionListener() {
                 /**
                  *
-                 * @param arg0
+                 * @param arg0 actionPerformed argument
                  */
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
@@ -1421,7 +1428,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
                 /**
                  *
-                 * @param e
+                 * @param e actionPerformed argument
                  */
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1475,7 +1482,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
                     closeBtn.addActionListener(new ActionListener() {
                         /**
                          *
-                         * @param e
+                         * @param e actionPerformed argument
                          */
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -1486,7 +1493,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
                     savingsBtn.addActionListener(new ActionListener() {
                         /**
                          *
-                         * @param e
+                         * @param e actionPerformed argument
                          */
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -1526,7 +1533,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param categoryListener
+     * @param categoryListener seting categoryListener
      */
     public void setCategoryListener(CreateCategoryListener categoryListener) {
         this.categoryListener = categoryListener;
@@ -1534,7 +1541,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param companyListener
+     * @param companyListener setting companyListener
      */
     public void setCompanyListener(CreateCompanyListener companyListener) {
         this.companyListener = companyListener;
@@ -1542,7 +1549,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param itemListener
+     * @param itemListener setting setItemListener
      */
     public void setItemListener(CreateItemListener itemListener) {
         // TODO Auto-generated method stub
@@ -1552,7 +1559,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param orderListener
+     * @param orderListener setting orderListener
      */
     public void setOrderListener(CreateOrderListener orderListener){
         this.orderListener = orderListener;
@@ -1560,7 +1567,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param event
+     * @param event setting fireCategoryEvent
      */
     public void fireCategoryEvent(CategoryEvent event) {
         if (categoryListener != null) {
@@ -1570,8 +1577,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param event
-     * @param table
+     * @param event argument
+     * @param table argument
      */
     public void fireDeleteEvent(CompanyEvent event, String table) {
         appListener.deleteRow(event, table);
@@ -1579,7 +1586,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param event
+     * @param event argument
      */
     public void fireCompanyEvent(CompanyEvent event) {
         if (companyListener != null) {
@@ -1589,8 +1596,8 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param event
-     * @param type
+     * @param event argument
+     * @param type argument
      */
     public void fireItemEvent(ItemsEvent event, String type) {
         if (itemListener != null) {
@@ -1600,7 +1607,7 @@ public class View extends JFrame implements ActionListener, CategoryListener,
 
     /**
      *
-     * @param event
+     * @param event argument
      */
     public void fireOrderEvent(OrderEvent event){
         if(orderListener != null){

@@ -67,11 +67,11 @@ public class MySQLDAOFactory extends DAOFactory {
 
     /**
      *
-     * @param type
-     * @param valueMap
-     * @param table
-     * @param id
-     * @return
+     * @param type typ zapytania: insert lub update
+     * @param valueMap Mapa z wartościami
+     * @param table nazwa tabeli
+     * @param id przechowanie id rekorku który ma być zmodyfikowany
+     * @return zwraca wynik z executeUpdate, czyli wykonanie zapytania
      * @throws SQLException
      */
 	@Override
@@ -82,11 +82,11 @@ public class MySQLDAOFactory extends DAOFactory {
 		
 		prepare(valueMap);
 		Connection conn = Database.getInstance().getConnection();
-		if (type == "insert") {
+		if (type.equals("insert")) {
 			query = "insert into " + table + "(" + val + ") values ("
 					+ question + ")";
             System.out.println(question);
-		} else if (type == "update") {
+		} else if (type.equals("update")) {
 			query = "update " + table + " set " + updateval + " where id = "
 					+ id;
 		}
