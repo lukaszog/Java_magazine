@@ -7,11 +7,18 @@ import java.sql.SQLException;
 
 
 public class Database extends Thread {
+
+    /**
+     *
+     */
 	
 	private static Database instance = new Database();
 	
 	private Connection conn;
-	
+
+    /**
+     *
+     */
 	private Database() {
 		try {
 			this.connect();
@@ -20,15 +27,27 @@ public class Database extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
+    /**
+     *
+     * @return
+     */
 	public static Database getInstance() {
 		return instance;
 	}
-	
+
+    /**
+     *
+     * @return
+     */
 	public Connection getConnection() {
 		return conn;
 	}
-	
+
+    /**
+     *
+     * @throws Exception
+     */
 	public void connect() throws Exception {
         System.out.println("MyThread - START "+Thread.currentThread().getName());
 
@@ -48,7 +67,10 @@ public class Database extends Thread {
         System.out.println("MyThread - END "+Thread.currentThread().getName());
 
 	}
-	
+
+    /**
+     *
+     */
 	public void disconnect() {
 		if (conn != null) {
 			try {

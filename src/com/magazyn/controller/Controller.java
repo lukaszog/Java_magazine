@@ -15,6 +15,13 @@ public class Controller implements CreateCategoryListener,
 	private View view;
 	private Model model;
 
+    /**
+     *
+     * @param view
+     * @param model
+     * @throws SQLException
+     * @throws Exception
+     */
     public Controller(View view, Model model) throws SQLException, Exception {
 
 		this.view = view;
@@ -26,6 +33,10 @@ public class Controller implements CreateCategoryListener,
 
 	}
 
+    /**
+     *
+     * @param event
+     */
 	public void addCategory(CategoryEvent event) {
 
 		Map<Object, Object> valueMap = new HashMap<Object, Object>();
@@ -52,6 +63,11 @@ public class Controller implements CreateCategoryListener,
 		}
 	}
 
+    /**
+     *
+     * @param event
+     * @param table
+     */
 	@Override
 	public void deleteRow(CompanyEvent event, String table) {
 		// TODO Auto-generated method stub
@@ -78,6 +94,10 @@ public class Controller implements CreateCategoryListener,
 		}
 	}
 
+    /**
+     *
+     * @param event
+     */
     @Override
     public void addOrder(OrderEvent event) {
 
@@ -106,6 +126,11 @@ public class Controller implements CreateCategoryListener,
         }
     }
 
+    /**
+     *
+     * @param event
+     * @param type
+     */
 	@Override
 	public void addItem(ItemsEvent event, String type) {
 		// TODO Auto-generated method stub
@@ -155,6 +180,11 @@ public class Controller implements CreateCategoryListener,
 		}
 		
 	}
+
+    /**
+     *
+     * @param event
+     */
 	public void addCompany(CompanyEvent event) {
 
 		Map<Object, Object> valueMap = new HashMap<Object, Object>();
@@ -186,6 +216,9 @@ public class Controller implements CreateCategoryListener,
 
 	}
 
+    /**
+     *
+     */
 	public void getCategory() {
 
 		try {
@@ -196,6 +229,9 @@ public class Controller implements CreateCategoryListener,
 		}
 	}
 
+    /**
+     *
+     */
 	public void getCompany() {
 
 		try {
@@ -205,6 +241,9 @@ public class Controller implements CreateCategoryListener,
 		}
 	}
 
+    /**
+     *
+     */
 	public void getOrder() {
 
 		try {
@@ -214,6 +253,9 @@ public class Controller implements CreateCategoryListener,
 		}
 	}
 
+    /**
+     *
+     */
 	public void getItem() {
 
 		try {
@@ -223,15 +265,22 @@ public class Controller implements CreateCategoryListener,
 		}
 	}
 
+    /**
+     *
+     */
 	public void getClient() {
 
 		try {
+            System.out.println("Jestem w get Client");
 			model.loadClient(view);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+    /**
+     *
+     */
 	public void onOpen() {
 		try {
 			Database.getInstance().connect();
@@ -240,6 +289,9 @@ public class Controller implements CreateCategoryListener,
 		}
 	}
 
+    /**
+     *
+     */
 	public void onClose() {
 		Database.getInstance().disconnect();
 	}

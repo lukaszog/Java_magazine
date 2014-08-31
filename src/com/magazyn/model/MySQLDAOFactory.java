@@ -18,6 +18,10 @@ public class MySQLDAOFactory extends DAOFactory {
 	private String updateval = "";
 	private int x = 1;
 
+    /**
+     *
+     * @param valueMap
+     */
 	public void prepare(Map<Object, Object> valueMap) {
 
 		Integer mapsize = valueMap.size();
@@ -38,7 +42,14 @@ public class MySQLDAOFactory extends DAOFactory {
 			mapsize--;
 		}
 	}
-	
+
+    /**
+     *
+     * @param table
+     * @param id
+     * @return
+     * @throws SQLException
+     */
 	public int delete(String table, int id) throws SQLException{
 		
 		Connection conn = Database.getInstance().getConnection();
@@ -54,6 +65,15 @@ public class MySQLDAOFactory extends DAOFactory {
 
 	}
 
+    /**
+     *
+     * @param type
+     * @param valueMap
+     * @param table
+     * @param id
+     * @return
+     * @throws SQLException
+     */
 	@Override
 	public int question(String type, Map<Object, Object> valueMap,
 			String table, int id) throws SQLException {

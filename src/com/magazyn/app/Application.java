@@ -6,14 +6,26 @@ import com.magazyn.controller.Controller;
 import com.magazyn.model.Model;
 import com.magazyn.view.View;
 
+/**
+ *
+ */
 public class Application {
 
 	private static final long MEGABYTE = 1024L * 1024L;
 
+    /**
+     *
+     * @param bytes
+     * @return
+     */
 	public static long bytesToMegaBytes(long bytes) {
 		return bytes / MEGABYTE;
 	}
 
+    /**
+     *
+     * @param args
+     */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 
@@ -31,6 +43,11 @@ public class Application {
 		});
 	}
 
+    /**
+     *
+     * @throws SQLException
+     * @throws Exception
+     */
 	public static void runApp() throws SQLException, Exception {
 
 		Model model = new Model();

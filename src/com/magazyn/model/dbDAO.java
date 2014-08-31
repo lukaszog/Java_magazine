@@ -13,204 +13,276 @@ import javax.swing.SwingWorker;
 
 public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 
-	private Model model;
-	private View view;
-	private Job job;
-	private List<Category> categories;
-	private List<Company> companies;
-	private List<Client> clients;
-	private List<Order> orders;
-	private List<Item> items;
-	private String table;
+    private Model model;
+    private View view;
+    private Job job;
+    private List<Category> categories;
+    private List<Company> companies;
+    private List<Client> clients;
+    private List<Order> orders;
+    private List<Item> items;
+    private String table;
 
-	public void setJob(Job job) {
-		this.job = job;
-	}
+    /**
+     *
+     * @param job
+     */
+    public void setJob(Job job) {
+        this.job = job;
+    }
 
-	public void setItself(Model model) {
-		this.model = model;
-	}
+    /**
+     *
+     * @param model
+     */
+    public void setItself(Model model) {
+        this.model = model;
+    }
 
-	public void setView(View view) {
-		this.view = view;
-	}
+    /**
+     *
+     * @param view
+     */
+    public void setView(View view) {
+        this.view = view;
+    }
 
-	public void setTable(String table) {
-		this.table = table;
-	}
+    /**
+     *
+     * @param table
+     */
+    public void setTable(String table) {
+        this.table = table;
+    }
 
-	@Override
-	protected Void doInBackground() throws Exception {
-		// TODO Auto-generated method stub
-		if (table == "kategorie") {
-			if (job == Job.SELECT) {
-				categories = getCategory();
-				System.out.println("Jestem w kategorie");
-			}
-		}
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    @Override
+    protected Void doInBackground() throws Exception {
+        // TODO Auto-generated method stub
+        if (table == "kategorie") {
+            if (job == Job.SELECT) {
+                categories = getCategory();
+                System.out.println("Jestem w kategorie");
+            }
+        }
 
-		System.out.println(table);
-		if (table == "firmy") {
-			System.out.println("Jestem tutaj w company");
-			companies = getCompany();
-			System.out.println("za company");
-		}
-		if (table == "produkty") {
-			items = getItem();
-			System.out.println("za itemami");
-		}
-		if (table == "zamowienia") {
-			orders = getOrder();
-		}
-		return null;
-	}
+        System.out.println(table);
+        if (table == "firmy") {
+            System.out.println("Jestem tutaj w company");
+            companies = getCompany();
+            System.out.println("za company");
+        }
+        if (table == "produkty") {
+            items = getItem();
+            System.out.println("za itemami");
+        }
+        if (table == "zamowienia") {
+            orders = getOrder();
+        }
+        if(table == "klienci"){
+            clients = getClient();
+        }
+        return null;
+    }
 
-	@Override
-	protected void done() {
+    /**
+     *
+     */
+    @Override
+    protected void done() {
 
-		if (table == "kategorie") {
+        if (table == "kategorie") {
 
-			if (job == Job.SELECT) {
-				model.setPeople(categories);
-				view.loadData();
-			}
-		}
-		if (table == "firmy") {
-			System.out.println("done firmy");
-			model.setCompany(companies);
-			view.loadCompany();
-		}
-		if (table == "produkty") {
-			model.setItem(items);
-			view.loadItem();
-		}
-		if (table == "zamowienia") {
-			model.setOrder(orders);
-			view.loadOrder();
+            if (job == Job.SELECT) {
+                model.setPeople(categories);
+                view.loadData();
+            }
+        }
+        if (table == "firmy") {
+            System.out.println("done firmy");
+            model.setCompany(companies);
+            view.loadCompany();
+        }
+        if (table == "produkty") {
+            model.setItem(items);
+            view.loadItem();
+        }
+        if (table == "zamowienia") {
+            model.setOrder(orders);
+            view.loadOrder();
 
-		}
-		if (table == "klienci") {
-			model.setClient(clients);
-			view.loadClient();
-		}
-	}
+        }
+        if (table == "klienci") {
+            model.setClient(clients);
+            view.loadClient();
+        }
+    }
 
-	public List<Company> getCompany() throws SQLException {
-		List<Company> comp = new ArrayList<Company>();
-		Connection conn = Database.getInstance().getConnection();
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
+    public List<Company> getCompany() throws SQLException {
+        List<Company> comp = new ArrayList<Company>();
+        Connection conn = Database.getInstance().getConnection();
 
-		String sql = "select nazwa,id,adres from firmy";
-		Statement selectStatement = conn.createStatement();
-		ResultSet results = selectStatement.executeQuery(sql);
+        String sql = "select nazwa,id,adres from firmy";
+        Statement selectStatement = conn.createStatement();
+        ResultSet results = selectStatement.executeQuery(sql);
 
-		while (results.next()) {
-			int id = results.getInt("id");
-			String name = results.getString("nazwa");
-			String address = results.getString("adres");
-			Company company = new Company(id, name, address);
-			comp.add(company);
-		}
-		results.close();
-		selectStatement.close();
+        while (results.next()) {
+            int id = results.getInt("id");
+            String name = results.getString("nazwa");
+            String address = results.getString("adres");
+            Company company = new Company(id, name, address);
+            comp.add(company);
+        }
+        results.close();
+        selectStatement.close();
 
-		return comp;
-	}
+        return comp;
+    }
 
-	public List<Category> getCategory() throws SQLException {
-		List<Category> cat = new ArrayList<Category>();
-		Connection conn = Database.getInstance().getConnection();
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
+    public List<Category> getCategory() throws SQLException {
+        List<Category> cat = new ArrayList<Category>();
+        Connection conn = Database.getInstance().getConnection();
 
-		String sql = "select id, name from kategorie";
-		Statement selectStatement = conn.createStatement();
-		ResultSet results = selectStatement.executeQuery(sql);
+        String sql = "select id, name from kategorie";
+        Statement selectStatement = conn.createStatement();
+        ResultSet results = selectStatement.executeQuery(sql);
 
-		while (results.next()) {
-			int id = results.getInt("id");
-			String name = results.getString("name");
-			Category category = new Category(id, name);
-			cat.add(category);
+        while (results.next()) {
+            int id = results.getInt("id");
+            String name = results.getString("name");
+            Category category = new Category(id, name);
+            cat.add(category);
 
-		}
-		results.close();
-		selectStatement.close();
+        }
+        results.close();
+        selectStatement.close();
 
-		return cat;
-	}
+        return cat;
+    }
 
-	@Override
-	public List<Client> getClient() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<Client> getClient() throws SQLException {
 
-	@Override
-	public List<Order> getOrder() throws SQLException {
-		// TODO Auto-generated method stub
-		List<Order> ord = new ArrayList<Order>();
-		Connection conn = Database.getInstance().getConnection();
+        List<Client> cli = new ArrayList<Client>();
+        Connection conn = Database.getInstance().getConnection();
 
-		String sql = "select Z.id,Z.data,Z.id_klienta,Z.id_produktu,Z.realizacja,"
-				+ "P.nazwa,K.imie,K.nazwisko,K.adres"
-				+ " from zamowienia Z"
-				+ " join klienci K on Z.id_klienta=K.id"
-				+ " join produkty P on Z.id_produktu=P.id;";
+        String sql = "select * from klienci";
+        Statement selectStatement = conn.createStatement();
+        ResultSet results = selectStatement.executeQuery(sql);
 
-		Statement selectStatement = conn.createStatement();
-		ResultSet results = selectStatement.executeQuery(sql);
+        while (results.next()) {
+            int id = results.getInt("id");
+            String name = results.getString("imie");
+            String lastname = results.getString("nazwisko");
+            String addres = results.getString("adres");
+            Client client = new Client(id, name,lastname, addres);
+            cli.add(client);
 
-		while (results.next()) {
-			int id = results.getInt("Z.id");
-			String date = results.getString("Z.data");
-			int id_client = results.getInt("Z.id_klienta");
-			int id_item = results.getInt("Z.id_produktu");
-			String client_name = results.getString("K.imie");
-			String last_name = results.getString("K.nazwisko");
-			String product = results.getString("P.nazwa");
-			String address = results.getString("K.adres");
-			int done = results.getInt("Z.realizacja");
+        }
+        results.close();
+        selectStatement.close();
 
-			System.out.println("dodalem");
-			Order order = new Order(id, date, id_client, id_item, client_name,
-					last_name, product, address, done);
-			ord.add(order);
+        return cli;
 
-		}
-		results.close();
-		selectStatement.close();
+    }
 
-		return ord;
-	}
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<Order> getOrder() throws SQLException {
+        // TODO Auto-generated method stub
+        List<Order> ord = new ArrayList<Order>();
+        Connection conn = Database.getInstance().getConnection();
 
-	@Override
-	public List<Item> getItem() throws SQLException {
-		// TODO Auto-generated method stub
-		List<Item> ite = new ArrayList<Item>();
-		Connection conn = Database.getInstance().getConnection();
+        String sql = "select Z.id,Z.data,Z.id_klienta,Z.id_produktu,Z.realizacja,"
+                + "P.nazwa,K.imie,K.nazwisko,K.adres"
+                + " from zamowienia Z"
+                + " join klienci K on Z.id_klienta=K.id"
+                + " join produkty P on Z.id_produktu=P.id;";
 
-		String sql = "select  P.id,P.id_kategoria,P.id_firmy,P.nazwa,K.name,F.nazwa"
-				+ " 	from produkty P	"
-				+ "     join kategorie K on P.id_kategoria=K.id"
-				+ "	    join firmy F on P.id_firmy=F.id";
+        Statement selectStatement = conn.createStatement();
+        ResultSet results = selectStatement.executeQuery(sql);
 
-		Statement selectStatement = conn.createStatement();
-		ResultSet results = selectStatement.executeQuery(sql);
+        while (results.next()) {
+            int id = results.getInt("Z.id");
+            String date = results.getString("Z.data");
+            int id_client = results.getInt("Z.id_klienta");
+            int id_item = results.getInt("Z.id_produktu");
+            String client_name = results.getString("K.imie");
+            String last_name = results.getString("K.nazwisko");
+            String product = results.getString("P.nazwa");
+            String address = results.getString("K.adres");
+            int done = results.getInt("Z.realizacja");
 
-		while (results.next()) {
-			int id = results.getInt("id");
-			String category = results.getString("K.name");
-			String company = results.getString("F.nazwa");
-			String name = results.getString("P.nazwa");
-			int id_category = results.getInt("P.id_kategoria");
-			int id_company = results.getInt("P.id_firmy");
+            System.out.println("dodalem");
+            Order order = new Order(id, date, id_client, id_item, client_name,
+                    last_name, product, address, done);
+            ord.add(order);
 
-			Item item = new Item(id, category, company, name, id_category,
-					id_company);
-			ite.add(item);
+        }
+        results.close();
+        selectStatement.close();
 
-		}
-		results.close();
-		selectStatement.close();
+        return ord;
+    }
 
-		return ite;
-	}
+    /**
+     * 
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<Item> getItem() throws SQLException {
+        // TODO Auto-generated method stub
+        List<Item> ite = new ArrayList<Item>();
+        Connection conn = Database.getInstance().getConnection();
+
+        String sql = "select  P.id,P.id_kategoria,P.id_firmy,P.nazwa,K.name,F.nazwa"
+                + " 	from produkty P	"
+                + "     join kategorie K on P.id_kategoria=K.id"
+                + "	    join firmy F on P.id_firmy=F.id";
+
+        Statement selectStatement = conn.createStatement();
+        ResultSet results = selectStatement.executeQuery(sql);
+
+        while (results.next()) {
+            int id = results.getInt("id");
+            String category = results.getString("K.name");
+            String company = results.getString("F.nazwa");
+            String name = results.getString("P.nazwa");
+            int id_category = results.getInt("P.id_kategoria");
+            int id_company = results.getInt("P.id_firmy");
+
+            Item item = new Item(id, category, company, name, id_category,
+                    id_company);
+            ite.add(item);
+
+        }
+        results.close();
+        selectStatement.close();
+
+        return ite;
+    }
 }

@@ -14,11 +14,19 @@ public class Model {
 	private List<Order> order = new Vector<Order>();
 	private List<Client> client = new Vector<Client>();
 
+    /**
+     *
+     * @return
+     */
 	public List<Category> getPeople() {
 		System.out.println(people.size());
 		return new ArrayList<Category>(people);
 	}
 
+    /**
+     *
+     * @return
+     */
 	public List<Client> getClient() {
 		return new ArrayList<Client>(client);
 	}
@@ -30,41 +38,74 @@ public class Model {
 		return new ArrayList<Order>(order);
 	}
 
+    /**
+     *
+     * @return
+     */
 	public List<Company> getCompany() {
 		return new ArrayList<Company>(company);
 	}
 
+    /**
+     *
+     * @return
+     */
 	public List<Item> getItem() {
 		return new ArrayList<Item>(item);
 	}
 
+    /**
+     *
+     * @param item
+     */
 	public void setItem(List<Item> item) {
 		this.item = item;
 	}
 
+    /**
+     *
+     * @param people
+     */
 	public void setPeople(List<Category> people) {
 		this.people = people;
 		// this.people.addAll(getPeople());
 	}
 
+    /**
+     *
+     * @param companies
+     */
 	public void setCompany(List<Company> companies) {
 		// TODO Auto-generated method stub
 		this.company = companies;
 
 	}
 
+    /**
+     *
+     * @param orders
+     */
 	public void setOrder(List<Order> orders) {
 		// TODO Auto-generated method stub
 		this.order = orders;
 
 	}
 
+    /**
+     *
+     * @param clients
+     */
 	public void setClient(List<Client> clients) {
 		// TODO Auto-generated method stub
 		this.client = clients;
 
 	}
 
+    /**
+     *
+     * @param view
+     * @throws Exception
+     */
 	public void load(View view) throws Exception {
 		people.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
@@ -79,6 +120,11 @@ public class Model {
 			System.out.println("Categories is null");
 	}
 
+    /**
+     *
+     * @param view
+     * @throws Exception
+     */
 	public void loadCompany(View view) throws Exception {
 		company.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
@@ -91,6 +137,11 @@ public class Model {
 		((dbDAO) companyDAO).execute();
 	}
 
+    /**
+     *
+     * @param view
+     * @throws Exception
+     */
 	public void loadItem(View view) throws Exception {
 		item.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
@@ -103,6 +154,11 @@ public class Model {
 		((dbDAO) itemDAO).execute();
 	}
 
+    /**
+     *
+     * @param view
+     * @throws Exception
+     */
 	public void loadOrder(View view) throws Exception {
 		order.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
@@ -115,11 +171,16 @@ public class Model {
 		((dbDAO) orderDAO).execute();
 	}
 
+    /**
+     *
+     * @param view
+     * @throws Exception
+     */
 	public void loadClient(View view) throws Exception {
 		client.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		TableDAO itemDAO = factory.getCategoryDAO();
-		System.out.println("Model loadOrder working");
+		System.out.println("Model loadClient working");
 		((dbDAO) itemDAO).setJob(Job.SELECT);
 		((dbDAO) itemDAO).setTable("klienci");
 		((dbDAO) itemDAO).setItself(this);
