@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88508b84-48fc-403b-9e35-0c0c8c8467ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_32.xml" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\app\Application$1.class" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\app\Application.class" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\controller\CategoryListener.class" afterPath="" />
@@ -84,15 +83,6 @@
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\view\View$9$2.class" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\view\View$9.class" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\view\View.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magazyn/app/Application.java" afterPath="$PROJECT_DIR$/src/com/magazyn/app/Application.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Magazyn2.iml" afterPath="$PROJECT_DIR$/Magazyn2.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magazyn/model/MySQLDAOFactory.java" afterPath="$PROJECT_DIR$/src/com/magazyn/model/MySQLDAOFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magazyn/model/dbDAO.java" afterPath="$PROJECT_DIR$/src/com/magazyn/model/dbDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_30_bin.xml" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_30_bin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Magazyn2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -675,7 +665,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1036" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32868218" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -693,7 +683,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16625917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16625917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21128319" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
