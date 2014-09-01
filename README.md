@@ -1,6 +1,8 @@
 Simple database company management in Java using JDBC
 =============
 
+Documentation: doc folder
+
 Database file: database.sql
 
 Database password and db name in: com.magazyn.model/Database.java
