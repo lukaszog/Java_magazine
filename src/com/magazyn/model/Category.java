@@ -1,5 +1,11 @@
 package com.magazyn.model;
 
+/**
+ * @author Łukasz
+ * Category class, using to load data from database to objects
+ */
+
+
 public class Category {
 	
 	private int id;
@@ -8,8 +14,8 @@ public class Category {
 
     /**
      *
-     * @param id
-     * @param name
+     * @param id category ID
+     * @param name category name
      */
 
 	public Category(int id, String name)
@@ -24,7 +30,7 @@ public class Category {
 
     /**
      *
-     * @param id
+     * @param id id
      */
 	public void setId(int id) {
 		this.id = id;
@@ -32,7 +38,7 @@ public class Category {
 
     /**
      *
-     * @return
+     * @return name
      */
 	public String getName() {
 		return name;
@@ -40,7 +46,7 @@ public class Category {
 
     /**
      *
-     * @param name
+     * @param name name
      */
 
 	public void setName(String name) {
@@ -49,7 +55,7 @@ public class Category {
 
     /**
      *
-     * @return
+     * @return name
      */
  	public String toString() {
 		return name;
@@ -57,7 +63,7 @@ public class Category {
 
     /**
      *
-     * @return
+     * @return name
      */
 	public String getTable() {
 		return table;
@@ -65,7 +71,7 @@ public class Category {
 
     /**
      *
-     * @param table
+     * @param table table
      */
 	public void setTable(String table) {
 		this.table = table;

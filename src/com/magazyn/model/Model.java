@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+/**
+ * @author Łukasz
+ * Connect to dbDAO and select data from DB
+ */
 public class Model {
 
 	private List<Category> people = new Vector<Category>();
@@ -16,7 +20,7 @@ public class Model {
 
     /**
      *
-     * @return
+     * @return ArrayList<Category>(people)
      */
 	public List<Category> getPeople() {
 		System.out.println(people.size());
@@ -25,7 +29,7 @@ public class Model {
 
     /**
      *
-     * @return
+     * @return  ArrayList<Client>(client)
      */
 	public List<Client> getClient() {
 		return new ArrayList<Client>(client);
@@ -33,14 +37,12 @@ public class Model {
 
 	public List<Order> getOrder() {
 
-		System.out.println("rozmiar" + order.size());
-		
 		return new ArrayList<Order>(order);
 	}
 
     /**
      *
-     * @return
+     * @return ArrayList<Company>(company)
      */
 	public List<Company> getCompany() {
 		return new ArrayList<Company>(company);
@@ -48,7 +50,7 @@ public class Model {
 
     /**
      *
-     * @return
+     * @return ArrayList<Item>(item)
      */
 	public List<Item> getItem() {
 		return new ArrayList<Item>(item);
@@ -110,7 +112,6 @@ public class Model {
 		people.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		TableDAO personDAO = factory.getCategoryDAO();
-		System.out.println("Model load working");
 		((dbDAO) personDAO).setJob(Job.SELECT);
 		((dbDAO) personDAO).setItself(this);
 		((dbDAO) personDAO).setTable("kategorie");
@@ -129,7 +130,6 @@ public class Model {
 		company.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		TableDAO companyDAO = factory.getCategoryDAO();
-		System.out.println("Model loadCompany working");
 		((dbDAO) companyDAO).setJob(Job.SELECT);
 		((dbDAO) companyDAO).setTable("firmy");
 		((dbDAO) companyDAO).setItself(this);
@@ -146,7 +146,6 @@ public class Model {
 		item.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		TableDAO itemDAO = factory.getCategoryDAO();
-		System.out.println("Model loadItem working");
 		((dbDAO) itemDAO).setJob(Job.SELECT);
 		((dbDAO) itemDAO).setTable("produkty");
 		((dbDAO) itemDAO).setItself(this);
@@ -163,7 +162,6 @@ public class Model {
 		order.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		TableDAO orderDAO = factory.getCategoryDAO();
-		System.out.println("Model loadOrder working");
 		((dbDAO) orderDAO).setJob(Job.SELECT);
 		((dbDAO) orderDAO).setTable("zamowienia");
 		((dbDAO) orderDAO).setItself(this);
@@ -180,7 +178,6 @@ public class Model {
 		client.clear();
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		TableDAO itemDAO = factory.getCategoryDAO();
-		System.out.println("Model loadClient working");
 		((dbDAO) itemDAO).setJob(Job.SELECT);
 		((dbDAO) itemDAO).setTable("klienci");
 		((dbDAO) itemDAO).setItself(this);

@@ -7,9 +7,14 @@ import com.magazyn.model.Model;
 import com.magazyn.view.View;
 
 /**
+ * @author Łukasz ogan
+ * Main class of application
  *
  */
+
 public class Application {
+
+
 
 	private static final long MEGABYTE = 1024L * 1024L;
 
@@ -52,9 +57,7 @@ public class Application {
 
 		Model model = new Model();
 		View view = new View();
-		Controller controller = new Controller(view, model); // kontroler slucha
-																// modelu i
-																// widoku
+		Controller controller = new Controller(view, model);
 
 		view.setCategoryListener(controller);
 		view.setCompanyListener(controller);

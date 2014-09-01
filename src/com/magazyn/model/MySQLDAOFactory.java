@@ -20,7 +20,8 @@ public class MySQLDAOFactory extends DAOFactory {
 
     /**
      *
-     * @param valueMap
+     * Prepare query
+     * @param valueMap map of values
      */
 	public void prepare(Map<Object, Object> valueMap) {
 
@@ -45,9 +46,9 @@ public class MySQLDAOFactory extends DAOFactory {
 
     /**
      *
-     * @param table
-     * @param id
-     * @return
+     * @param table table name
+     * @param id record id
+     * @return execute query
      * @throws SQLException
      */
 	public int delete(String table, int id) throws SQLException{
@@ -67,6 +68,7 @@ public class MySQLDAOFactory extends DAOFactory {
 
     /**
      *
+     * Prepare query
      * @param type typ zapytania: insert lub update
      * @param valueMap Mapa z wartościami
      * @param table nazwa tabeli

@@ -27,10 +27,9 @@ import java.util.List;
  * @see com.magazyn.view.ItemsListener
  * @see com.magazyn.view.OrderListener
  *
- * Klasa Viev.java z pakietu view odpowiedzialna jest za
- * wygenereowanie widoków dla poszczególnych kart w aplikacji
- * klasa komunikuje się z kontrolerem (Controller.java z pakietu controller)
- * Kontroler ma za zadanie pobranie informacji z modelu, docelowe infromacje trafiają do widoku
+ *Class View.java view package * is responsible for generating views for each tab in the application
+ *class communicates with the controller (Controller.java controller package)
+ *The controller is designed to extract information from the model, the target information go to the view
  *
  *
  */
@@ -40,22 +39,22 @@ public class View extends JFrame implements CategoryListener,
 
 
     private static final long serialVersionUID = 1L;
-    private Model model; /** Odwołanie do modelu */
-    private AppListener appListener; /** Odwołanie do głównego Listenera aplikacji */
-    private JTextField custNameTxt; /** Pole tekstowe wykorzystywane w GridBagLayout */
-    private JButton closeBtn; /** Przycisk zamknięcia */
-    private JButton savingsBtn; /** Przycisk zapisu */
-    private CreateCategoryListener categoryListener; /** Listener tworzenia nowej kategorii */
-    private CreateCompanyListener companyListener; /** Listener tworzenia nowej firmy */
-    private CreateOrderListener orderListener; /** Listener tworzenia nowego zamowienia */
-    private CreateItemListener itemListener; /** Listener produktow */
+    private Model model; /** Model instance */
+    private AppListener appListener; /** Instance to main app listener */
+    private JTextField custNameTxt; /** TexField in GridBagLayout */
+    private JButton closeBtn; /** Close button */
+    private JButton savingsBtn; /** Save button */
+    private CreateCategoryListener categoryListener; /** Listener creating new category */
+    private CreateCompanyListener companyListener; /** Listener creating new company */
+    private CreateOrderListener orderListener; /** Listener creating new order*/
+    private CreateItemListener itemListener; /** Item Listener */
     private JTabbedPane tabbedPane = new JTabbedPane();
-    private JPanel card1 = new JPanel(); /** Tworzenie poszczególnych kart dla CardLayout */
+    private JPanel card1 = new JPanel(); /** Creating card for CardLayout */
     private JPanel card2 = new JPanel();
     private JPanel card3 = new JPanel();
     private JPanel card4 = new JPanel();
     private JPanel card5 = new JPanel();
-    private JPanel card6 = new JPanel(); /** Tworzenie kart - koniec */
+    private JPanel card6 = new JPanel(); /** Creating cards - end */
     private JTable jTable1 = new JTable();
     private JTable companyTable = new JTable();
     private JTable itemTable = new JTable();
@@ -212,7 +211,6 @@ public class View extends JFrame implements CategoryListener,
 
                 switch (paneindex) {
                     case 0:
-                        System.out.println("zero");
                         categoryflag = 0;
                         break;
                     case 1:
@@ -222,28 +220,22 @@ public class View extends JFrame implements CategoryListener,
                         }
                         break;
                     case 2:
-                        System.out.println("Case 2");
                         if (itemflag == 0) {
                             itemShow();
                             itemflag = 1;
                         }
                         break;
                     case 3:
-                        System.out.println("Case 3");
                         if (orderflag == 0) {
                             orderShow();
                             orderflag = 1;
                         }
                         break;
                     case 4:
-                        System.out.print("Case 4");
                         if(clientflag==0){
                             clientsShow();
                             clientflag = 1;
                         }
-                        break;
-                    case 5:
-                        System.out.println("Informacje");
                         break;
 
                 }
@@ -505,7 +497,22 @@ public class View extends JFrame implements CategoryListener,
 
         appListener.getClient();
 
-        clientTable = new JTable(clientmodel);
+        clientTable = new JTable(clientmodel){
+
+            public Component prepareRenderer(TableCellRenderer renderer,
+                                             int Index_row, int Index_col) {
+                Component comp = super.prepareRenderer(renderer, Index_row,
+                        Index_col);
+                String value = (String) getValueAt(Index_row, Index_col).toString();
+
+                if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+                    comp.setBackground(new Color(240,248,255));
+                } else {
+                    comp.setBackground(new Color(198,226,255));
+                }
+                return comp;
+            }
+        };
 
 
         clientScroll = new JScrollPane(clientTable);
@@ -601,9 +608,9 @@ public class View extends JFrame implements CategoryListener,
 
                 // even index, selected or not selected
                 if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
-                    comp.setBackground(Color.lightGray);
+                    comp.setBackground(new Color(240,248,255));
                 } else {
-                    comp.setBackground(Color.white);
+                    comp.setBackground(new Color(198,226,255));
                 }
                 if(value.equals("Brak realizacji")){
                     comp.setBackground(Color.red);
@@ -839,9 +846,9 @@ public class View extends JFrame implements CategoryListener,
                         Index_col);
                 // even index, selected or not selected
                 if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
-                    comp.setBackground(Color.lightGray);
+                    comp.setBackground(new Color(240,248,255));
                 } else {
-                    comp.setBackground(Color.white);
+                    comp.setBackground(new Color(198,226,255));
                 }
                 return comp;
             }
@@ -1167,9 +1174,9 @@ public class View extends JFrame implements CategoryListener,
                         Index_col);
                 // even index, selected or not selected
                 if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
-                    comp.setBackground(Color.lightGray);
+                    comp.setBackground(new Color(240,248,255));
                 } else {
-                    comp.setBackground(Color.white);
+                    comp.setBackground(new Color(198,226,255));
                 }
                 return comp;
             }
@@ -1369,11 +1376,10 @@ public class View extends JFrame implements CategoryListener,
             (TableCellRenderer renderer,int Index_row, int Index_col) {
                 Component comp = super.prepareRenderer(renderer, Index_row, Index_col);
                  if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
-                    comp.setBackground(Color.lightGray);
-                }
-                else {
-                    comp.setBackground(Color.white);
-                }
+                     comp.setBackground(new Color(240,248,255));
+                 } else {
+                     comp.setBackground(new Color(198,226,255));
+                 }
                 return comp;
             }
         };

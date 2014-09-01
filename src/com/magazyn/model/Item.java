@@ -1,5 +1,9 @@
 package com.magazyn.model;
 
+/**
+ * @author Łukasz
+ */
+
 public class Item {
 
 	private int id;

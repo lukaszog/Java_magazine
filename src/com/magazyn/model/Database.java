@@ -5,14 +5,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+/**
+ * @author Łukasz
+ *
+ * Connect do database
+ *
+ */
 public class Database extends Thread {
 
     /**
      *
      */
 	
-	private static Database instance = new Database();
+	private static Database instance = new Database(); /** get instance */
 	
 	private Connection conn;
 
@@ -30,7 +35,7 @@ public class Database extends Thread {
 
     /**
      *
-     * @return
+     * @return instance
      */
 	public static Database getInstance() {
 		return instance;
@@ -38,14 +43,14 @@ public class Database extends Thread {
 
     /**
      *
-     * @return
+     * @return conn
      */
 	public Connection getConnection() {
 		return conn;
 	}
 
     /**
-     *
+     * Connect
      * @throws Exception
      */
 	public void connect() throws Exception {
@@ -69,7 +74,7 @@ public class Database extends Thread {
 	}
 
     /**
-     *
+     * Disconnect
      */
 	public void disconnect() {
 		if (conn != null) {

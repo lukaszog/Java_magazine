@@ -3,6 +3,11 @@ package com.magazyn.model;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * @author Łukasz
+ * This class choose database getFactory() and run two primaty method question() and delete()
+ */
+
 public abstract class DAOFactory {
 	
 	public static final int MYSQL = 0;

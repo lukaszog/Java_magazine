@@ -11,6 +11,11 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
+/**
+ * @author Łukasz
+ * Load data from database and put into List using SwingWorker
+ */
+
 public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 
     private Model model;
@@ -63,60 +68,53 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
     @Override
     protected Void doInBackground() throws Exception {
         // TODO Auto-generated method stub
-        if (table == "kategorie") {
+        if (table.equals("kategorie")) {
             if (job == Job.SELECT) {
                 categories = getCategory();
-                System.out.println("Jestem w kategorie");
             }
         }
-
-        System.out.println(table);
-        if (table == "firmy") {
-            System.out.println("Jestem tutaj w company");
+         if (table.equals("firmy")) {
             companies = getCompany();
-            System.out.println("za company");
         }
-        if (table == "produkty") {
+        if (table.equals("produkty")) {
             items = getItem();
-            System.out.println("za itemami");
         }
-        if (table == "zamowienia") {
+        if (table.equals("zamowienia")) {
             orders = getOrder();
         }
-        if(table == "klienci"){
+        if(table.equals("klienci")){
             clients = getClient();
         }
         return null;
     }
 
     /**
-     *
+     * SwingWorker method
      */
     @Override
     protected void done() {
 
-        if (table == "kategorie") {
+        if (table.equals("kategorie")) {
 
             if (job == Job.SELECT) {
                 model.setPeople(categories);
                 view.loadData();
             }
         }
-        if (table == "firmy") {
-            System.out.println("done firmy");
+        if (table.equals("firmy")) {
             model.setCompany(companies);
             view.loadCompany();
         }
-        if (table == "produkty") {
+        if (table.equals("produkty")) {
             model.setItem(items);
             view.loadItem();
         }
-        if (table == "zamowienia") {
+        if (table.equals("zamowienia")) {
             model.setOrder(orders);
             view.loadOrder();
 
         }
-        if (table == "klienci") {
+        if (table.equals("klienci")) {
             model.setClient(clients);
             view.loadClient();
         }
@@ -124,7 +122,7 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 
     /**
      *
-     * @return
+     * @return comp
      * @throws SQLException
      */
     public List<Company> getCompany() throws SQLException {
@@ -150,7 +148,7 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 
     /**
      *
-     * @return
+     * @return cat
      * @throws SQLException
      */
     public List<Category> getCategory() throws SQLException {
@@ -176,7 +174,7 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 
     /**
      *
-     * @return
+     * @return cli
      * @throws SQLException
      */
     @Override
@@ -207,7 +205,7 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
 
     /**
      *
-     * @return
+     * @return ord
      * @throws SQLException
      */
     @Override
@@ -249,8 +247,8 @@ public class dbDAO extends SwingWorker<Void, Void> implements TableDAO {
     }
 
     /**
-     * 
-     * @return
+     *
+     * @return ite
      * @throws SQLException
      */
     @Override

@@ -35,7 +35,7 @@ public class Controller implements CreateCategoryListener,
 
     /**
      *
-     * @param event
+     * @param event CategoryEvent argument
      */
 	public void addCategory(CategoryEvent event) {
 
@@ -65,8 +65,8 @@ public class Controller implements CreateCategoryListener,
 
     /**
      *
-     * @param event
-     * @param table
+     * @param event CompanyEvent argument
+     * @param table table name
      */
 	@Override
 	public void deleteRow(CompanyEvent event, String table) {
@@ -80,13 +80,13 @@ public class Controller implements CreateCategoryListener,
 			e.printStackTrace();
 		}
 		try {
-			if (table == "kategorie") {
+			if (table.equals("kategorie")) {
 				model.load(view);
-			} else if (table == "firmy") {
+			} else if (table.equals("firmy")) {
 				model.loadCompany(view);
-			} else if(table == "produkty"){
+			} else if(table.equals("produkty")){
 				model.loadItem(view);
-			}else if(table == "zamowienia"){
+			}else if(table.equals("zamowienia")){
                 model.loadOrder(view);
             }
 		} catch (Exception e) {
@@ -96,7 +96,7 @@ public class Controller implements CreateCategoryListener,
 
     /**
      *
-     * @param event
+     * @param event OrderEvent argument
      */
     @Override
     public void addOrder(OrderEvent event) {
@@ -110,9 +110,9 @@ public class Controller implements CreateCategoryListener,
         valueMap.put(field, realisation);
 
         try {
-            if (event.getAction() == "add") {
+            if (event.getAction().equals("add")) {
                 factory.question("insert", valueMap, table, 0);
-            } else if (event.getAction() == "update") {
+            } else if (event.getAction().equals("update")) {
                 factory.question("update", valueMap, table, event.getId());
             }
         } catch (SQLException e) {
@@ -120,7 +120,6 @@ public class Controller implements CreateCategoryListener,
         }
         try {
             model.loadOrder(view);
-            System.out.println("odswiezam");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,8 +127,8 @@ public class Controller implements CreateCategoryListener,
 
     /**
      *
-     * @param event
-     * @param type
+     * @param event ItemsEvent argument
+     * @param type query type
      */
 	@Override
 	public void addItem(ItemsEvent event, String type) {
@@ -138,7 +137,7 @@ public class Controller implements CreateCategoryListener,
 		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
 		String table = event.getTable();
 		String value = event.getName();
-		if(type=="normal"){
+		if(type.equals("normal")){
 		String field = "nazwa";
 		String field2 ="id_firmy";
 		String field3 = "id_kategoria";
@@ -147,27 +146,25 @@ public class Controller implements CreateCategoryListener,
 		valueMap.put(field2, event.getIdCompany());
 		valueMap.put(field3, event.getIdCategory());
 
-            System.out.println(event.getIdCompany());
-
-		}else if(type=="box"){
+		}else if(type.equals("box")){
 			String field1 = "id_kategoria";
 			String field2 = "id_firmy";
 			
 			valueMap.put(field1, event.getIdCategory());
 			valueMap.put(field2,event.getIdCompany());
 			
-		}else if(type=="box_category"){
+		}else if(type.equals("box_category")){
 			String field1 = "id_kategoria";
 			valueMap.put(field1, event.getIdCategory());
-		}else if(type=="box_company"){
+		}else if(type.equals("box_company")){
 			String field1 = "id_firmy";
 			valueMap.put(field1, event.getIdCompany());
 		}
 	
 		try {
-			if (event.getAction() == "add") {
+			if (event.getAction().equals("add")) {
 				factory.question("insert", valueMap, table, 0);
-			} else if (event.getAction() == "update") {
+			} else if (event.getAction().equals("update")) {
 				factory.question("update", valueMap, table, event.getId());
 			}
 		} catch (SQLException e) {
@@ -183,7 +180,7 @@ public class Controller implements CreateCategoryListener,
 
     /**
      *
-     * @param event
+     * @param event CompanyEvent argument
      */
 	public void addCompany(CompanyEvent event) {
 
@@ -217,6 +214,7 @@ public class Controller implements CreateCategoryListener,
 	}
 
     /**
+     * This method load categoryies from database using model
      *
      */
 	public void getCategory() {
@@ -230,7 +228,7 @@ public class Controller implements CreateCategoryListener,
 	}
 
     /**
-     *
+     * This method load companies from database using model
      */
 	public void getCompany() {
 
@@ -242,7 +240,7 @@ public class Controller implements CreateCategoryListener,
 	}
 
     /**
-     *
+     * This method load orders from database using model
      */
 	public void getOrder() {
 
@@ -254,7 +252,7 @@ public class Controller implements CreateCategoryListener,
 	}
 
     /**
-     *
+     * This method load items from database using model
      */
 	public void getItem() {
 
@@ -266,12 +264,12 @@ public class Controller implements CreateCategoryListener,
 	}
 
     /**
+     * This method load clients from database using model
      *
      */
 	public void getClient() {
 
 		try {
-            System.out.println("Jestem w get Client");
 			model.loadClient(view);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -279,7 +277,7 @@ public class Controller implements CreateCategoryListener,
 	}
 
     /**
-     *
+     * Start connection
      */
 	public void onOpen() {
 		try {
@@ -290,7 +288,7 @@ public class Controller implements CreateCategoryListener,
 	}
 
     /**
-     *
+     * Close connection
      */
 	public void onClose() {
 		Database.getInstance().disconnect();

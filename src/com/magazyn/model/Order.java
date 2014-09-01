@@ -1,5 +1,8 @@
 package com.magazyn.model;
 
+/**
+ * @author Łukasz
+ */
 public class Order {
 	
 	private int id;
@@ -11,7 +14,19 @@ public class Order {
 	private String product;
 	private String address;
 	private int done;
-	
+
+    /**
+     *
+     * @param id
+     * @param date
+     * @param id_client
+     * @param id_item
+     * @param client_name
+     * @param client_lastname
+     * @param product
+     * @param address
+     * @param done
+     */
 	public Order(int id, String date, int id_client, int id_item,
 			String client_name, String client_lastname, String product, String address, int done) {
 		this.id = id;
@@ -25,6 +40,10 @@ public class Order {
 		this.done = done;
 	}
 
+    /**
+     *
+     * @return done
+     */
 	public int getDone() {
 		return done;
 	}
@@ -33,71 +52,69 @@ public class Order {
 		this.done = done;
 	}
 
+    /**
+     *
+     * @return address
+     */
 	public String getAddress() {
 		return address;
 	}
 
+    /**
+     *
+     * @param address
+     */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
+    /**
+     *
+     * @return id
+     */
 	public int getId() {
 		return id;
 	}
 
+    /**
+     *
+     * @param id
+     */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+    /**
+     *
+     * @return date
+     */
 	public String getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public int getId_client() {
-		return id_client;
-	}
-
-	public void setId_client(int id_client) {
-		this.id_client = id_client;
-	}
-
-	public int getId_item() {
-		return id_item;
-	}
-
-	public void setId_item(int id_item) {
-		this.id_item = id_item;
-	}
-
+    /**
+     *
+     * @return client_name
+     */
 	public String getClient_name() {
 		return client_name;
 	}
-
-	public void setClient_name(String client_name) {
-		this.client_name = client_name;
-	}
-
+    /**
+     *
+     * @return client_lastname
+     */
 	public String getClient_lastname() {
 		return client_lastname;
 	}
 
-	public void setClient_lastname(String client_lastname) {
-		this.client_lastname = client_lastname;
-	}
-
+    /**
+     *
+     * @return product
+     */
 	public String getProduct() {
 		return product;
 	}
 
-	public void setProduct(String product) {
-		this.product = product;
-	}
-	
-	
 	
 	
 	
