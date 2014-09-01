@@ -1,7 +1,7 @@
 package com.magazyn.model;
 
 /**
- * @author Łukasz
+ * @author Lukasz
  * Category class, using to load data from database to objects
  */
 

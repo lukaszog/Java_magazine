@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * @author Łukasz
+ * @author Lukasz
  * Connect to dbDAO and select data from DB
  */
 public class Model {

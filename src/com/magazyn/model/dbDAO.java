@@ -12,7 +12,7 @@ import java.util.List;
 import javax.swing.SwingWorker;
 
 /**
- * @author Łukasz
+ * @author Lukasz
  * Load data from database and put into List using SwingWorker
  */
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 
 /**
- * @author Łukasz Ogan
+ * @author Lukasz Ogan
  * @see com.magazyn.view.CategoryListener
  * @see com.magazyn.view.ClientsListener
  * @see com.magazyn.view.CompanyListener
@@ -78,6 +78,7 @@ public class View extends JFrame implements CategoryListener,
     private JButton print = new JButton();
     private JButton deletebutton = new JButton("Usuń");
     private JButton acceptbutton  = new JButton("Akceptuj");
+    private JButton cancelbutton = new JButton("Anuluj");
     private List<Category> people;
     private List<Company> company;
     private List<Client> client;
@@ -307,10 +308,20 @@ public class View extends JFrame implements CategoryListener,
 
                             System.out.println(id);
 
+                            System.out.println(box_flag_category);
                             if (box_flag_category == 1) {
                                 String name = (String) table.getValueAt(
                                         table.getSelectedRow(), 2);
-                                System.out.println("edycja item linijka 254");
+
+                                Category selected_category = (Category) categoryBox
+                                        .getSelectedItem();
+                                Company selected_copmany = (Company) companyBox
+                                        .getSelectedItem();
+
+                                id_category = selected_category.getId();
+                                id_company = selected_copmany.getId();
+
+                                //System.out.println("edycja item linijka 254:  " + dd);
 
                                 fireItemEvent(new ItemsEvent(id, "produkty",
                                         null, null, name, id_category,
@@ -353,23 +364,32 @@ public class View extends JFrame implements CategoryListener,
                 int selRow = (Integer) Jb.getValueAt(Jb.getSelectedRow(), 1);
                 if (selRow >= 0) {
                     System.out.println(selRow);
-                    if (table == "kategorie") {
+                    if (table.equals("kategorie")) {
                         fireDeleteEvent(new CompanyEvent(null, "kategorie",
                                 null, selRow, ""), "kategorie");
-                    } else if (table == "firmy") {
+                        deletebutton.setEnabled(false);
+                    } else if (table.equals("firmy")) {
                         fireDeleteEvent(new CompanyEvent(null, "firmy", null,
                                 selRow, ""), "firmy");
-                    } else if (table == "produkty") {
+                        deletebutton.setEnabled(false);
+                    } else if (table.equals("produkty")) {
                         System.out.println("Produkty: " + selRow);
                         fireDeleteEvent(new CompanyEvent(null, "produkty",
                                 null, selRow, ""), "produkty");
-                    }else if(table =="zamowienia"){
+                        deletebutton.setEnabled(false);
+                    }else if(table.equals("zamowienia")){
                         fireDeleteEvent(new CompanyEvent(null,"zamowienia",null,selRow,""),"zamowienia");
+                        deletebutton.setEnabled(false);
+                    }else if (table.equals("klienci")) {
+                        fireDeleteEvent(new CompanyEvent(null, "klienci", null, selRow, ""), "klienci");
+                        deletebutton.setEnabled(false);
                     }
+
                 }
 
             }
         });
+
     }
 
     /**
@@ -419,6 +439,7 @@ public class View extends JFrame implements CategoryListener,
      */
     public void loadCompany() {
         // TODO Auto-generated method stub
+
 
         companymodel.setRowCount(0);
         company = model.getCompany();
@@ -497,7 +518,22 @@ public class View extends JFrame implements CategoryListener,
 
         appListener.getClient();
 
+
         clientTable = new JTable(clientmodel){
+
+            /**
+             *
+             * @param row numer of row in JTable
+             * @param column numer of column in JTable
+             * @return
+             */
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0 || column == 1 || column == 2 || column == 3 || column == 4 ) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
 
             public Component prepareRenderer(TableCellRenderer renderer,
                                              int Index_row, int Index_col) {
@@ -510,6 +546,7 @@ public class View extends JFrame implements CategoryListener,
                 } else {
                     comp.setBackground(new Color(198,226,255));
                 }
+
                 return comp;
             }
         };
@@ -533,11 +570,14 @@ public class View extends JFrame implements CategoryListener,
 
         tableEdit(clientTable); // edycja tabeli
 
+        System.out.print("elooooooo");
+
         controls = new JPanel(new BorderLayout(5, 5));
         buttons = new JPanel(new GridLayout(0, 1, 4, 4));
+
         print = new JButton("Drukuj");
         deletebutton = new JButton("Usuń");
-        deleteAction(orderTable, "klienci");
+        deleteAction(clientTable, "klienci");
 
 
         clientTable.addMouseListener(new MouseAdapter() {
@@ -551,8 +591,6 @@ public class View extends JFrame implements CategoryListener,
             }
         });
 
-        buttons.add(newrow);
-        buttons.add(acceptbutton);
         buttons.add(deletebutton);
         buttons.add(print);
         buttons.setBorder(new TitledBorder("Zarządzaj"));
@@ -586,7 +624,7 @@ public class View extends JFrame implements CategoryListener,
              * @return
              */
             public boolean isCellEditable(int row, int column) {
-                if (column == 0 || column == 1) {
+                if (column < 8) {
                     return false;
                 } else {
                     return true;
@@ -606,7 +644,6 @@ public class View extends JFrame implements CategoryListener,
                         Index_col);
                 String value = (String) getValueAt(Index_row, Index_col).toString();
 
-                // even index, selected or not selected
                 if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
                     comp.setBackground(new Color(240,248,255));
                 } else {
@@ -617,6 +654,7 @@ public class View extends JFrame implements CategoryListener,
                 }else if(value.equals("Zrealizowano")){
                     comp.setBackground(Color.GREEN);
                 }
+
                 return comp;
             }
 
@@ -644,14 +682,16 @@ public class View extends JFrame implements CategoryListener,
 
         controls = new JPanel(new BorderLayout(5, 5));
         buttons = new JPanel(new GridLayout(0, 1, 4, 4));
-        newrow = new JButton("Dodaj");
         print = new JButton("Drukuj");
         acceptbutton = new JButton("Akceptuj");
         deletebutton = new JButton("Usuń");
+        cancelbutton = new JButton("Anuluj");
+
         deleteAction(orderTable, "zamowienia");
 
 
         acceptbutton.setEnabled(false);
+        cancelbutton.setEnabled(false);
         orderTable.addMouseListener(new MouseAdapter() {
             /**
              *
@@ -660,9 +700,27 @@ public class View extends JFrame implements CategoryListener,
             @Override
             public void mouseClicked(MouseEvent e) {
                 acceptbutton.setEnabled(true);
+                cancelbutton.setEnabled(true);
             }
         });
 
+        cancelbutton.addActionListener(new ActionListener() {
+            /**
+             *
+             * @param e actionPerformed argument
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selRow = (Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 0);
+                if (selRow >= 0) {
+                    System.out.println(selRow);
+                    fireOrderEvent(new OrderEvent(selRow, "zamowienia",
+                            0, "update"));
+
+                }
+
+            }
+        });
         acceptbutton.addActionListener(new ActionListener() {
             /**
              *
@@ -681,123 +739,13 @@ public class View extends JFrame implements CategoryListener,
             }
         });
 
-        newrow.addActionListener(new ActionListener() {
 
-            /**
-             *
-             * @param e actionPerformed argument
-             */
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                final JFrame bankTeller = new JFrame("Dodaj now� firm�");
-                bankTeller.setSize(500, 280);
-                bankTeller.setLocationRelativeTo(null);
-                bankTeller.setResizable(false);
-                bankTeller.setLayout(new GridBagLayout());
-
-                bankTeller.setBackground(Color.gray);
-                GridBagConstraints c = new GridBagConstraints();
-
-                JPanel acctInfo = new JPanel(new GridBagLayout());
-                c.gridx = 0;
-                c.gridy = 0;
-                c.gridwidth = 2;
-                c.gridheight = 1;
-                c.insets = new Insets(5, 5, 5, 5);
-                bankTeller.add(acctInfo, c);
-                c.gridwidth = 1;
-
-                JLabel custNameLbl = new JLabel("Nazwa firmy");
-                c.gridx = 0;
-                c.gridy = 0;
-                c.insets = new Insets(0, 0, 0, 0);
-                acctInfo.add(custNameLbl, c);
-                c.weightx = 1.;
-
-                JLabel custAddressLbl = new JLabel("Adres firmy");
-                c.gridx = 0;
-                c.gridy = 1;
-                c.insets = new Insets(0, 0, 0, 0);
-                acctInfo.add(custAddressLbl, c);
-                c.weightx = 1.;
-
-                c.fill = GridBagConstraints.HORIZONTAL;
-                custNameTxt = new JTextField("", 1000);
-                c.gridx = 1;
-                c.gridy = 0;
-                c.insets = new Insets(5, 5, 5, 5);
-                acctInfo.add(custNameTxt, c);
-
-                c.fill = GridBagConstraints.HORIZONTAL;
-                final JTextField custAddressTxt = new JTextField("");
-                c.gridx = 1;
-                c.gridy = 1;
-                c.insets = new Insets(5, 5, 5, 5);
-                acctInfo.add(custAddressTxt, c);
-
-                closeBtn = new JButton("Anuluj");
-                c.gridx = 0;
-                c.gridy = 3;
-                c.insets = new Insets(5, 5, 5, 5);
-                acctInfo.add(closeBtn, c);
-
-                savingsBtn = new JButton("Dodaj");
-                c.gridx = 1;
-                c.gridy = 3;
-                c.insets = new Insets(5, 5, 5, 5);
-                acctInfo.add(savingsBtn, c);
-
-                bankTeller.setVisible(true);
-
-                closeBtn.addActionListener(new ActionListener() {
-                    /**
-                     *
-                     * @param e actionPerformed argument
-                     */
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        bankTeller.dispose();
-                    }
-                });
-
-                savingsBtn.addActionListener(new ActionListener() {
-
-                    /**
-                     *
-                     * @param e actionPerformed argument
-                     */
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
-                        String name = custNameTxt.getText();
-                        String address = custAddressTxt.getText();
-
-                        if (!name.isEmpty() && !address.isEmpty()) {
-                            JOptionPane.showMessageDialog(View.this, "Dodano",
-                                    "Dodano", JOptionPane.INFORMATION_MESSAGE);
-
-                            System.out.println(name + ": " + address);
-
-                            fireCompanyEvent(new CompanyEvent(name, "firmy",
-                                    address, 0, "add"));
-
-                        } else {
-                            JOptionPane.showMessageDialog(View.this,
-                                    "Uzupe�nij pole nazwa", "Uzupe�nij pole",
-                                    JOptionPane.WARNING_MESSAGE);
-                        }
-                    }
-                });
-            }
-        });
-
-        buttons.add(newrow);
         buttons.add(acceptbutton);
+        buttons.add(cancelbutton);
         buttons.add(deletebutton);
         buttons.add(print);
         buttons.setBorder(new TitledBorder("Zarządzaj"));
-
         controls.add(buttons, BorderLayout.NORTH);
 
         card4.add(orderScroll);
@@ -850,6 +798,12 @@ public class View extends JFrame implements CategoryListener,
                 } else {
                     comp.setBackground(new Color(198,226,255));
                 }
+                JComponent jc = (JComponent) comp;
+                if (Index_col >1 ) {
+                    jc.setToolTipText("Edytuj: "
+                            + getValueAt(Index_row, Index_col).toString());
+                }
+
                 return comp;
             }
         };
@@ -866,6 +820,7 @@ public class View extends JFrame implements CategoryListener,
 
         TableColumn categoryColumn = itemTable.getColumnModel().getColumn(3);
         TableColumn companyColumn = itemTable.getColumnModel().getColumn(4);
+
 
         categoryColumn.setCellEditor(new DefaultCellEditor(categoryBox));
         companyColumn.setCellEditor(new DefaultCellEditor(companyBox));
@@ -947,7 +902,7 @@ public class View extends JFrame implements CategoryListener,
         buttons = new JPanel(new GridLayout(0, 1, 4, 4));
         newrow = new JButton("Dodaj");
         print = new JButton("Drukuj");
-        deletebutton = new JButton("Usu�");
+        deletebutton = new JButton("Usuń");
         deleteAction(itemTable, "produkty");
 
         newrow.addActionListener(new ActionListener() {
@@ -1048,6 +1003,10 @@ public class View extends JFrame implements CategoryListener,
                     }
                 });
 
+                final int[] cmp;
+                cmp = new int[1];
+                final int[] cmpa;
+                cmpa = new int[1];
                 categoryBox.addItemListener(new ItemListener() {
                     /**
                      *
@@ -1059,17 +1018,15 @@ public class View extends JFrame implements CategoryListener,
                         Object item = event.getItem();
                         if (event.getStateChange() == ItemEvent.SELECTED
                                 && box_flag_category > 0) {
-                            System.out.println(item.toString()
-                                    + " selected!!!!!!!!!!!!");
-                            Category selected_category = (Category) categoryBox
+                             Category selected_category = (Category) categoryBox
                                     .getSelectedItem();
                             id_category = selected_category.getId();
                             System.out.println("Id kategorii:" + id_category);
+                            cmp[0]=1;
                         }
                     }
                 });
-
-                companyBox.addItemListener(new ItemListener() {
+                 companyBox.addItemListener(new ItemListener() {
 
                     /**
                      *
@@ -1081,12 +1038,11 @@ public class View extends JFrame implements CategoryListener,
                         Object item = event.getItem();
                         if (event.getStateChange() == ItemEvent.SELECTED
                                 && box_flag_company > 0) {
-                            System.out.println(item.toString()
-                                    + " selected!!!!!!!!!!!!");
                             Company selected_company = (Company) companyBox
                                     .getSelectedItem();
                             id_company = selected_company.getId();
                             System.out.println("Id firmy:" + id_company);
+                            cmpa[0]=1;
                         }
                     }
                 });
@@ -1101,7 +1057,7 @@ public class View extends JFrame implements CategoryListener,
 
                         String name = custNameTxt.getText();
 
-                        if (!name.isEmpty()) {
+                        if (!name.isEmpty() && cmp[0]>0 && cmpa[0]>0  ) {
                             JOptionPane.showMessageDialog(View.this, "Dodano",
                                     "Dodano", JOptionPane.INFORMATION_MESSAGE);
                             fireItemEvent(new ItemsEvent(0, "produkty", "", "",
@@ -1113,7 +1069,7 @@ public class View extends JFrame implements CategoryListener,
 
                         } else {
                             JOptionPane.showMessageDialog(View.this,
-                                    "Uzupe�nij pole nazwa", "Uzupe�nij pole",
+                                    "Uzupenij pola", "Uzupełnij pola",
                                     JOptionPane.WARNING_MESSAGE);
                         }
                     }
@@ -1125,7 +1081,7 @@ public class View extends JFrame implements CategoryListener,
         buttons.add(newrow);
         buttons.add(deletebutton);
         buttons.add(print);
-        buttons.setBorder(new TitledBorder("Zarz�dzaj"));
+        buttons.setBorder(new TitledBorder("Zarządzaj"));
 
         controls.add(buttons, BorderLayout.NORTH);
 
@@ -1178,6 +1134,11 @@ public class View extends JFrame implements CategoryListener,
                 } else {
                     comp.setBackground(new Color(198,226,255));
                 }
+                JComponent jc = (JComponent) comp;
+                if (Index_col >1 ) {
+                    jc.setToolTipText("Edytuj: "
+                            + getValueAt(Index_row, Index_col));
+                }
                 return comp;
             }
         };
@@ -1201,7 +1162,7 @@ public class View extends JFrame implements CategoryListener,
         buttons = new JPanel(new GridLayout(0, 1, 4, 4));
         newrow = new JButton("Dodaj");
         print = new JButton("Drukuj");
-        deletebutton = new JButton("Usu�");
+        deletebutton = new JButton("Usuń");
         deleteAction(companyTable, "firmy");
 
         newrow.addActionListener(new ActionListener() {
@@ -1213,13 +1174,13 @@ public class View extends JFrame implements CategoryListener,
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                final JFrame bankTeller = new JFrame("Dodaj now� firm�");
-                bankTeller.setSize(500, 280);
-                bankTeller.setLocationRelativeTo(null);
-                bankTeller.setResizable(false);
-                bankTeller.setLayout(new GridBagLayout());
+                final JFrame newpopup = new JFrame("Dodaj nową firmę");
+                newpopup.setSize(500, 280);
+                newpopup.setLocationRelativeTo(null);
+                newpopup.setResizable(false);
+                newpopup.setLayout(new GridBagLayout());
 
-                bankTeller.setBackground(Color.gray);
+                newpopup.setBackground(Color.gray);
                 GridBagConstraints c = new GridBagConstraints();
 
                 JPanel acctInfo = new JPanel(new GridBagLayout());
@@ -1228,7 +1189,7 @@ public class View extends JFrame implements CategoryListener,
                 c.gridwidth = 2;
                 c.gridheight = 1;
                 c.insets = new Insets(5, 5, 5, 5);
-                bankTeller.add(acctInfo, c);
+                newpopup.add(acctInfo, c);
                 c.gridwidth = 1;
 
                 JLabel custNameLbl = new JLabel("Nazwa firmy");
@@ -1265,13 +1226,13 @@ public class View extends JFrame implements CategoryListener,
                 c.insets = new Insets(5, 5, 5, 5);
                 acctInfo.add(closeBtn, c);
 
-                savingsBtn = new JButton("Dodaj");
+                savingsBtn = new JButton("Dodaj nową firmę");
                 c.gridx = 1;
                 c.gridy = 3;
                 c.insets = new Insets(5, 5, 5, 5);
                 acctInfo.add(savingsBtn, c);
 
-                bankTeller.setVisible(true);
+                newpopup.setVisible(true);
 
                 closeBtn.addActionListener(new ActionListener() {
                     /**
@@ -1280,7 +1241,7 @@ public class View extends JFrame implements CategoryListener,
                      */
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        bankTeller.dispose();
+                        newpopup.dispose();
                     }
                 });
 
@@ -1307,7 +1268,7 @@ public class View extends JFrame implements CategoryListener,
 
                         } else {
                             JOptionPane.showMessageDialog(View.this,
-                                    "Uzupe�nij pole nazwa", "Uzupe�nij pole",
+                                    "Uzupełnij pole", "Uzupełnij pole",
                                     JOptionPane.WARNING_MESSAGE);
                         }
                     }
@@ -1318,7 +1279,7 @@ public class View extends JFrame implements CategoryListener,
         buttons.add(newrow);
         buttons.add(deletebutton);
         buttons.add(print);
-        buttons.setBorder(new TitledBorder("Zarz�dzaj"));
+        buttons.setBorder(new TitledBorder("Zarządzaj"));
 
         controls.add(buttons, BorderLayout.NORTH);
 
@@ -1352,18 +1313,7 @@ public class View extends JFrame implements CategoryListener,
                 }
             }
 
-            /*public Component prepareRenderer(TableCellRenderer renderer,
-                    int row, int column) {
-                Component c = super.prepareRenderer(renderer, row, column);
-                if (c instanceof JComponent) {
-                    JComponent jc = (JComponent) c;
-                    if (column != 0) {
-                        jc.setToolTipText("Edytuj: "
-                                + getValueAt(row, column).toString());
-                    }
-                }
-                return c;
-            }*/
+
 
             /**
              *
@@ -1380,6 +1330,11 @@ public class View extends JFrame implements CategoryListener,
                  } else {
                      comp.setBackground(new Color(198,226,255));
                  }
+                JComponent jc = (JComponent) comp;
+                if (Index_col >1 ) {
+                    jc.setToolTipText("Edytuj: "
+                            + getValueAt(Index_row, Index_col).toString());
+                }
                 return comp;
             }
         };
@@ -1411,7 +1366,7 @@ public class View extends JFrame implements CategoryListener,
             buttons = new JPanel(new GridLayout(0, 1, 4, 4));
             newrow = new JButton("Dodaj");
             print = new JButton("Drukuj");
-            deletebutton = new JButton("Usu�");
+            deletebutton = new JButton("Usuń");
 
             tableEdit(jTable1); // edycja tabeli
 
@@ -1439,13 +1394,13 @@ public class View extends JFrame implements CategoryListener,
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    final JFrame bankTeller = new JFrame("Dodaj now� kategorie");
-                    bankTeller.setSize(500, 280);
-                    bankTeller.setLocationRelativeTo(null);
-                    bankTeller.setResizable(false);
-                    bankTeller.setLayout(new GridBagLayout());
+                    final JFrame newpopup = new JFrame("Dodaj nową kategorie");
+                    newpopup.setSize(500, 280);
+                    newpopup.setLocationRelativeTo(null);
+                    newpopup.setResizable(false);
+                    newpopup.setLayout(new GridBagLayout());
 
-                    bankTeller.setBackground(Color.gray);
+                    newpopup.setBackground(Color.gray);
                     GridBagConstraints c = new GridBagConstraints();
 
                     JPanel acctInfo = new JPanel(new GridBagLayout());
@@ -1454,7 +1409,7 @@ public class View extends JFrame implements CategoryListener,
                     c.gridwidth = 2;
                     c.gridheight = 1;
                     c.insets = new Insets(5, 5, 5, 5);
-                    bankTeller.add(acctInfo, c);
+                    newpopup.add(acctInfo, c);
                     c.gridwidth = 1;
 
                     JLabel custNameLbl = new JLabel("Nazwa kategorii");
@@ -1477,13 +1432,13 @@ public class View extends JFrame implements CategoryListener,
                     c.insets = new Insets(5, 5, 5, 5);
                     acctInfo.add(closeBtn, c);
 
-                    savingsBtn = new JButton("Dodaj");
+                    savingsBtn = new JButton("Dodaj nową kategorie");
                     c.gridx = 1;
                     c.gridy = 3;
                     c.insets = new Insets(5, 5, 5, 5);
                     acctInfo.add(savingsBtn, c);
 
-                    bankTeller.setVisible(true);
+                    newpopup.setVisible(true);
 
                     closeBtn.addActionListener(new ActionListener() {
                         /**
@@ -1492,7 +1447,7 @@ public class View extends JFrame implements CategoryListener,
                          */
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            bankTeller.dispose();
+                            newpopup.dispose();
                         }
                     });
 
@@ -1514,8 +1469,8 @@ public class View extends JFrame implements CategoryListener,
                                         "kategorie", 0, "add"));
                             } else {
                                 JOptionPane.showMessageDialog(View.this,
-                                        "Uzupe�nij pole nazwa",
-                                        "Uzupe�nij pole",
+                                        "Uzupełnij pole",
+                                        "Uzupełnij pole",
                                         JOptionPane.WARNING_MESSAGE);
                             }
                         }
@@ -1528,7 +1483,7 @@ public class View extends JFrame implements CategoryListener,
             buttons.add(newrow);
             buttons.add(deletebutton);
             buttons.add(print);
-            buttons.setBorder(new TitledBorder("Zarz�dzaj"));
+            buttons.setBorder(new TitledBorder("Zarządzaj"));
 
             controls.add(buttons, BorderLayout.NORTH);
 

@@ -1,5 +1,8 @@
 package com.magazyn.model;
 
+/**
+ *
+ */
 public enum Job {
 	
 	SELECT(1, "Select"),

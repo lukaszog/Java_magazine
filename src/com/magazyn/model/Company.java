@@ -1,7 +1,7 @@
 package com.magazyn.model;
 
 /**
- * @author Łukasz
+ * @author Lukasz
  */
 public class Company {
 	

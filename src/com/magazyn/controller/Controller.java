@@ -88,6 +88,8 @@ public class Controller implements CreateCategoryListener,
 				model.loadItem(view);
 			}else if(table.equals("zamowienia")){
                 model.loadOrder(view);
+            }else if(table.equals("klienci")){
+                model.loadClient(view);
             }
 		} catch (Exception e) {
 			e.printStackTrace();

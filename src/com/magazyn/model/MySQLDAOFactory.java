@@ -5,6 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * @author Lukasz
+ * @see com.magazyn.model.DAOFactory
+ */
 
 public class MySQLDAOFactory extends DAOFactory {
 

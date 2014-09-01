@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 /**
- * @author Łukasz
+ * @author Lukasz
  * This class choose database getFactory() and run two primaty method question() and delete()
  */
 

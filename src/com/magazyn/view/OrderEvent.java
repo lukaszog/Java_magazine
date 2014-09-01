@@ -1,6 +1,9 @@
 package com.magazyn.view;
 
-
+/**
+ * @author Lukasz
+ * This class is used to store data corresponding to the table
+ */
 public class OrderEvent {
 
     private int id;

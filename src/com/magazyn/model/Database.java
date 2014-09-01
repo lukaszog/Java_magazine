@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * @author Łukasz
+ * @author Lukasz
  *
  * Connect do database
  *
@@ -66,7 +66,7 @@ public class Database extends Thread {
 			throw new Exception("Driver not found");
 		}
 
-		String url = String.format("jdbc:mysql://localhost:%d/firma_magazyn",3306);
+		String url = String.format("jdbc:mysql://localhost:%d/firma_magazyn?useUnicode=true&characterEncoding=utf8&autoReconnect=true",3306);
 
 		conn = DriverManager.getConnection(url, "root", "");
         System.out.println("MyThread - END "+Thread.currentThread().getName());
