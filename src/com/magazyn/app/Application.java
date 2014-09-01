@@ -1,12 +1,12 @@
 package com.magazyn.app;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.NumberFormat;
-import javax.swing.SwingUtilities;
 import com.magazyn.controller.Controller;
 import com.magazyn.model.Model;
 import com.magazyn.view.View;
+
+import javax.swing.*;
+import java.sql.SQLException;
+import java.text.NumberFormat;
 
 /**
  * @author Lukasz

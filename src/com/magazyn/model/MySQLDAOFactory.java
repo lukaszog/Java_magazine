@@ -1,9 +1,9 @@
 package com.magazyn.model;
 
-import java.util.Map;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * @author Lukasz

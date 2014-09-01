@@ -2,14 +2,13 @@ package com.magazyn.model;
 
 import com.magazyn.view.View;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.SwingWorker;
 
 /**
  * @author Lukasz
