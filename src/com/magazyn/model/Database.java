@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * Connect do database
  *
  */
-public class Database extends Thread {
+public class Database {
 
     /**
      *
@@ -54,13 +54,11 @@ public class Database extends Thread {
      * @throws Exception
      */
 	public void connect() throws Exception {
-        System.out.println("MyThread - START "+Thread.currentThread().getName());
 
 		if (conn != null)
 			return;
 
 		try {
-            Thread.sleep(1000);
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			throw new Exception("Driver not found");
@@ -69,7 +67,6 @@ public class Database extends Thread {
 		String url = String.format("jdbc:mysql://localhost:%d/firma_magazyn?useUnicode=true&characterEncoding=utf8&autoReconnect=true",3306);
 
 		conn = DriverManager.getConnection(url, "root", "");
-        System.out.println("MyThread - END "+Thread.currentThread().getName());
 
 	}
 

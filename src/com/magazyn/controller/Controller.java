@@ -5,11 +5,13 @@ import com.magazyn.model.Database;
 import com.magazyn.model.Model;
 import com.magazyn.view.*;
 
+import javax.swing.*;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Controller implements CreateCategoryListener,
+public class Controller extends Component implements CreateCategoryListener,
 		CreateCompanyListener,CreateItemListener, AppListener, CreateOrderListener {
 
 	private View view;
@@ -77,7 +79,12 @@ public class Controller implements CreateCategoryListener,
 			factory.delete(table, event.getId());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+            System.out.println("bla");
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Nie można usunąć wybranego rekordu ze względu na powiązania tabeli", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+
+            e.printStackTrace();
 		}
 		try {
 			if (table.equals("kategorie")) {
@@ -92,7 +99,7 @@ public class Controller implements CreateCategoryListener,
                 model.loadClient(view);
             }
 		} catch (Exception e) {
-			e.printStackTrace();
+           	e.printStackTrace();
 		}
 	}
 

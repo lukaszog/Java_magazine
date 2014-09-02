@@ -711,7 +711,7 @@ public class View extends JFrame implements CategoryListener,
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selRow = (Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 0);
+                int selRow = (Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 1);
                 if (selRow >= 0) {
                     System.out.println(selRow);
                     fireOrderEvent(new OrderEvent(selRow, "zamowienia",
@@ -728,7 +728,7 @@ public class View extends JFrame implements CategoryListener,
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selRow = (Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 0);
+                int selRow = (Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 1);
                 if (selRow >= 0) {
                     System.out.println(selRow);
                     fireOrderEvent(new OrderEvent(selRow, "zamowienia",

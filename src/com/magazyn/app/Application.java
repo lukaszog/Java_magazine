@@ -67,7 +67,7 @@ public class Application {
         view.setOrderListener(controller);
 
 
-        new Thread(new Runnable(){
+        /*new Thread(new Runnable(){
             public void run(){
 
                 try {
@@ -93,7 +93,7 @@ public class Application {
                 }
 
             }
-        }).start();
+        }).start(); */
 
     }
 
