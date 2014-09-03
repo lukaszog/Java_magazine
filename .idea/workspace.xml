@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88508b84-48fc-403b-9e35-0c0c8c8467ed" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/magazyn/view/TableMouseListener.java" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\app\Application$1.class" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\app\Application.class" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\controller\CategoryListener.class" afterPath="" />
@@ -83,9 +84,8 @@
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\view\View$9$2.class" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\view\View$9.class" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Łukasz\workspace\Magazyn2\out\production\Magazyn2\com\magazyn\view\View.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magazyn/app/Application.java" afterPath="$PROJECT_DIR$/src/com/magazyn/app/Application.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magazyn/controller/Controller.java" afterPath="$PROJECT_DIR$/src/com/magazyn/controller/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magazyn/model/Database.java" afterPath="$PROJECT_DIR$/src/com/magazyn/model/Database.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magazyn/model/MySQLDAOFactory.java" afterPath="$PROJECT_DIR$/src/com/magazyn/model/MySQLDAOFactory.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magazyn/view/View.java" afterPath="$PROJECT_DIR$/src/com/magazyn/view/View.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -118,7 +118,7 @@
       <file leaf-file-name="TableDAO.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/TableDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="880">
+            <state vertical-scroll-proportion="0.0" vertical-offset="96" max-vertical-offset="896">
               <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
               <folding />
             </state>
@@ -128,28 +128,18 @@
       <file leaf-file-name="DAOFactory.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/DAOFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="339" max-vertical-offset="1024">
+            <state vertical-scroll-proportion="0.0" vertical-offset="96" max-vertical-offset="1040">
               <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MySQLDAOFactory.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MySQLDAOFactory.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/MySQLDAOFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.25693431" vertical-offset="256" max-vertical-offset="1808">
-              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Controller.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/magazyn/controller/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.428572" vertical-offset="928" max-vertical-offset="4976">
-              <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="1856">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -157,15 +147,50 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="View.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Controller.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/magazyn/controller/Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4307" max-vertical-offset="5328">
+              <caret line="232" column="57" selection-start-line="232" selection-start-column="57" selection-end-line="232" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="View.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/magazyn/view/View.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="10396" max-vertical-offset="22576">
-              <caret line="713" column="91" selection-start-line="713" selection-start-column="91" selection-end-line="713" selection-end-column="91" />
+            <state vertical-scroll-proportion="0.585997" vertical-offset="9775" max-vertical-offset="24272">
+              <caret line="693" column="47" selection-start-line="693" selection-start-column="47" selection-end-line="693" selection-end-column="47" />
+              <folding>
+                <element signature="e#3288#3298#0" expanded="true" />
+                <element signature="e#3359#3368#0" expanded="true" />
+                <element signature="e#22608#22952#0" expanded="true" />
+                <element signature="e#22941#22942#0" expanded="true" />
+                <element signature="e#30573#30911#0" expanded="true" />
+                <element signature="e#30900#30901#0" expanded="true" />
+                <element signature="e#41808#42146#0" expanded="true" />
+                <element signature="e#42135#42136#0" expanded="true" />
+                <element signature="e#42184#46537#0" expanded="true" />
+                <element signature="e#45044#46511#0" expanded="true" />
+                <element signature="e#46492#46493#0" expanded="true" />
+                <element signature="e#46526#46527#0" expanded="true" />
+                <element signature="e#49005#49322#0" expanded="true" />
+                <element signature="e#49311#49312#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableMouseListener.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/magazyn/view/TableMouseListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="512">
+              <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3216#3226#0" expanded="true" />
-                <element signature="e#3287#3296#0" expanded="true" />
+                <element signature="e#320#321#0" expanded="true" />
+                <element signature="e#354#355#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -174,7 +199,7 @@
       <file leaf-file-name="dbDAO.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/dbDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3715" max-vertical-offset="4400">
+            <state vertical-scroll-proportion="0.0" vertical-offset="224" max-vertical-offset="4656">
               <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
               <folding />
             </state>
@@ -184,7 +209,7 @@
       <file leaf-file-name="Order.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/Order.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="560" max-vertical-offset="1744">
+            <state vertical-scroll-proportion="0.0" vertical-offset="368" max-vertical-offset="2064">
               <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
               <folding />
             </state>
@@ -194,7 +219,7 @@
       <file leaf-file-name="Company.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/Company.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="176" max-vertical-offset="1104">
+            <state vertical-scroll-proportion="0.0" vertical-offset="48" max-vertical-offset="1296">
               <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
               <folding />
             </state>
@@ -204,18 +229,8 @@
       <file leaf-file-name="Model.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/Model.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="211" max-vertical-offset="2912">
+            <state vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="3104">
               <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Database.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/Database.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1392">
-              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -254,12 +269,13 @@
         <option value="$PROJECT_DIR$/src/com/magazyn/view/OrderEvent.java" />
         <option value="$PROJECT_DIR$/src/com/magazyn/model/TableDAO.java" />
         <option value="$PROJECT_DIR$/src/com/magazyn/model/Order.java" />
-        <option value="$PROJECT_DIR$/src/com/magazyn/model/MySQLDAOFactory.java" />
         <option value="$PROJECT_DIR$/src/com/magazyn/model/Model.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/com/magazyn/app/Application.java" />
-        <option value="$PROJECT_DIR$/src/com/magazyn/controller/Controller.java" />
         <option value="$PROJECT_DIR$/src/com/magazyn/model/Database.java" />
+        <option value="$PROJECT_DIR$/src/com/magazyn/model/MySQLDAOFactory.java" />
+        <option value="$PROJECT_DIR$/src/com/magazyn/controller/Controller.java" />
+        <option value="$PROJECT_DIR$/src/com/magazyn/view/TableMouseListener.java" />
         <option value="$PROJECT_DIR$/src/com/magazyn/view/View.java" />
       </list>
     </option>
@@ -439,7 +455,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -553,6 +568,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -614,6 +630,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -639,19 +668,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -789,12 +805,12 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16625917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21128319" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21128319" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928178" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -825,25 +841,11 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/magazyn/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3312" max-vertical-offset="19600">
-          <caret line="207" column="0" selection-start-line="205" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3216#3226#0" expanded="true" />
-            <element signature="e#3287#3296#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magazyn/controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="3504">
           <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -852,9 +854,20 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1472" max-vertical-offset="19600">
           <caret line="92" column="15" selection-start-line="92" selection-start-column="15" selection-end-line="92" selection-end-column="15" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3216#3226#0" expanded="true" />
-            <element signature="e#3287#3296#0" expanded="true" />
+            <element signature="e#3288#3298#0" expanded="true" />
+            <element signature="e#3359#3368#0" expanded="true" />
+            <element signature="e#22608#22952#0" expanded="true" />
+            <element signature="e#22941#22942#0" expanded="true" />
+            <element signature="e#30573#30911#0" expanded="true" />
+            <element signature="e#30900#30901#0" expanded="true" />
+            <element signature="e#41808#42146#0" expanded="true" />
+            <element signature="e#42135#42136#0" expanded="true" />
+            <element signature="e#42184#46537#0" expanded="true" />
+            <element signature="e#45044#46511#0" expanded="true" />
+            <element signature="e#46492#46493#0" expanded="true" />
+            <element signature="e#46526#46527#0" expanded="true" />
+            <element signature="e#49005#49322#0" expanded="true" />
+            <element signature="e#49311#49312#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -885,9 +898,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3616">
           <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -904,9 +915,20 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="3376" max-vertical-offset="19056">
           <caret line="262" column="26" selection-start-line="262" selection-start-column="26" selection-end-line="262" selection-end-column="26" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3216#3226#0" expanded="true" />
-            <element signature="e#3287#3296#0" expanded="true" />
+            <element signature="e#3288#3298#0" expanded="true" />
+            <element signature="e#3359#3368#0" expanded="true" />
+            <element signature="e#22608#22952#0" expanded="true" />
+            <element signature="e#22941#22942#0" expanded="true" />
+            <element signature="e#30573#30911#0" expanded="true" />
+            <element signature="e#30900#30901#0" expanded="true" />
+            <element signature="e#41808#42146#0" expanded="true" />
+            <element signature="e#42135#42136#0" expanded="true" />
+            <element signature="e#42184#46537#0" expanded="true" />
+            <element signature="e#45044#46511#0" expanded="true" />
+            <element signature="e#46492#46493#0" expanded="true" />
+            <element signature="e#46526#46527#0" expanded="true" />
+            <element signature="e#49005#49322#0" expanded="true" />
+            <element signature="e#49311#49312#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -915,9 +937,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3616">
           <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -934,9 +954,20 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="10160" max-vertical-offset="19088">
           <caret line="690" column="63" selection-start-line="690" selection-start-column="63" selection-end-line="690" selection-end-column="63" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3216#3226#0" expanded="true" />
-            <element signature="e#3287#3296#0" expanded="true" />
+            <element signature="e#3288#3298#0" expanded="true" />
+            <element signature="e#3359#3368#0" expanded="true" />
+            <element signature="e#22608#22952#0" expanded="true" />
+            <element signature="e#22941#22942#0" expanded="true" />
+            <element signature="e#30573#30911#0" expanded="true" />
+            <element signature="e#30900#30901#0" expanded="true" />
+            <element signature="e#41808#42146#0" expanded="true" />
+            <element signature="e#42135#42136#0" expanded="true" />
+            <element signature="e#42184#46537#0" expanded="true" />
+            <element signature="e#45044#46511#0" expanded="true" />
+            <element signature="e#46492#46493#0" expanded="true" />
+            <element signature="e#46526#46527#0" expanded="true" />
+            <element signature="e#49005#49322#0" expanded="true" />
+            <element signature="e#49311#49312#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -945,9 +976,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="3570">
           <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -955,9 +984,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="3570">
           <caret line="22" column="24" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1136,7 +1163,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.09259259" vertical-offset="0" max-vertical-offset="864">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1156,33 +1182,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magazyn/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.428572" vertical-offset="928" max-vertical-offset="4976">
-          <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/Database.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1392">
           <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magazyn/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="10396" max-vertical-offset="22576">
-          <caret line="713" column="91" selection-start-line="713" selection-start-column="91" selection-end-line="713" selection-end-column="91" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3216#3226#0" expanded="true" />
-            <element signature="e#3287#3296#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1236,9 +1240,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magazyn/model/MySQLDAOFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.25693431" vertical-offset="256" max-vertical-offset="1808">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="1856">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magazyn/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4307" max-vertical-offset="5328">
+          <caret line="232" column="57" selection-start-line="232" selection-start-column="57" selection-end-line="232" selection-end-column="57" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magazyn/view/TableMouseListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="512">
+          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#320#321#0" expanded="true" />
+            <element signature="e#354#355#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magazyn/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.585997" vertical-offset="9775" max-vertical-offset="24272">
+          <caret line="693" column="47" selection-start-line="693" selection-start-column="47" selection-end-line="693" selection-end-column="47" />
+          <folding>
+            <element signature="e#3288#3298#0" expanded="true" />
+            <element signature="e#3359#3368#0" expanded="true" />
+            <element signature="e#22608#22952#0" expanded="true" />
+            <element signature="e#22941#22942#0" expanded="true" />
+            <element signature="e#30573#30911#0" expanded="true" />
+            <element signature="e#30900#30901#0" expanded="true" />
+            <element signature="e#41808#42146#0" expanded="true" />
+            <element signature="e#42135#42136#0" expanded="true" />
+            <element signature="e#42184#46537#0" expanded="true" />
+            <element signature="e#45044#46511#0" expanded="true" />
+            <element signature="e#46492#46493#0" expanded="true" />
+            <element signature="e#46526#46527#0" expanded="true" />
+            <element signature="e#49005#49322#0" expanded="true" />
+            <element signature="e#49311#49312#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

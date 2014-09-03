@@ -56,12 +56,20 @@ public class Controller extends Component implements CreateCategoryListener,
 				factory.question("update", valueMap, table, event.getId());
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Błąd przy dodawaniu/modyfikacji kategorii", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+
+            e.printStackTrace();
 		}
 		try {
 			model.load(view);
 		} catch (Exception e) {
-			e.printStackTrace();
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Błąd przy dodawaniu kategorii", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+
+            e.printStackTrace();
 		}
 	}
 
@@ -99,7 +107,10 @@ public class Controller extends Component implements CreateCategoryListener,
                 model.loadClient(view);
             }
 		} catch (Exception e) {
-           	e.printStackTrace();
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Błąd przy ładowaniu danych, zrestartuj program", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+            e.printStackTrace();
 		}
 	}
 
@@ -130,6 +141,10 @@ public class Controller extends Component implements CreateCategoryListener,
         try {
             model.loadOrder(view);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Błąd przy operacji na zamowieniach, spróbuj ponownie", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+
             e.printStackTrace();
         }
     }
@@ -177,12 +192,20 @@ public class Controller extends Component implements CreateCategoryListener,
 				factory.question("update", valueMap, table, event.getId());
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Błąd przy operacji na produktach, spróbuj ponownie", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+
+            e.printStackTrace();
 		}
 		try {
 			model.loadItem(view);
 		} catch (Exception e) {
-			e.printStackTrace();
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Błąd przy ładowaniu produktów, spróbuj ponownie", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+
+            e.printStackTrace();
 		}
 		
 	}
@@ -205,19 +228,27 @@ public class Controller extends Component implements CreateCategoryListener,
 		valueMap.put(field2, value2);
 
 		try {
-			if (event.getAction() == "add") {
+			if (event.getAction().equals("add")) {
 				factory.question("insert", valueMap, table, 0);
-			} else if (event.getAction() == "update") {
+			} else if (event.getAction().equals("update")) {
 				factory.question("update", valueMap, table, event.getId());
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Błąd przy modyfikacji danych firm", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+
+            e.printStackTrace();
 		}
 		try {
 			model.loadCompany(view);
 			System.out.println("odswiezam");
 		} catch (Exception e) {
-			e.printStackTrace();
+            JOptionPane.showMessageDialog(Controller.this,
+                    "Błąd przy ładowaniu firm", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+
+            e.printStackTrace();
 		}
 
 	}
@@ -292,7 +323,7 @@ public class Controller extends Component implements CreateCategoryListener,
 		try {
 			Database.getInstance().connect();
 		} catch (Exception e) {
-			view.showError("Cannot connect to database.");
+			view.showError("Nie mogę połączyć się z bazą danych");
 		}
 	}
 

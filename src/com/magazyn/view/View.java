@@ -55,6 +55,7 @@ public class View extends JFrame implements CategoryListener,
     private JPanel card4 = new JPanel();
     private JPanel card5 = new JPanel();
     private JPanel card6 = new JPanel(); /** Creating cards - end */
+ //   private JPopupMenu popupMenu = new JPopupMenu(); /** popupMenu */
     private JTable jTable1 = new JTable();
     private JTable companyTable = new JTable();
     private JTable itemTable = new JTable();
@@ -89,6 +90,8 @@ public class View extends JFrame implements CategoryListener,
     private int box_flag_category = 0;
     private int box_flag_company;
     private int newrow_flag = 0;
+    private JMenuItem menuItemAdd;
+    private JMenuItem menuItemRemove;
 
     int categoryflag = 0, companyflag = 0, clientflag = 0, itemflag = 0,
             orderflag = 0;
@@ -365,6 +368,7 @@ public class View extends JFrame implements CategoryListener,
                 if (selRow >= 0) {
                     System.out.println(selRow);
                     if (table.equals("kategorie")) {
+
                         fireDeleteEvent(new CompanyEvent(null, "kategorie",
                                 null, selRow, ""), "kategorie");
                         deletebutton.setEnabled(false);
@@ -690,6 +694,20 @@ public class View extends JFrame implements CategoryListener,
         deleteAction(orderTable, "zamowienia");
 
 
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem menuItemRemove = new JMenuItem("Usuń");
+        popupMenu.add(menuItemRemove);
+        orderTable.setComponentPopupMenu(popupMenu);
+        menuItemRemove.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selRow = Integer.parseInt(orderTable.getValueAt(orderTable.getSelectedRow(), 1).toString());
+                fireDeleteEvent(new CompanyEvent(null, "zamowienia",
+                        null, selRow, ""), "zamowienia");
+
+            }
+        });
+
+
         acceptbutton.setEnabled(false);
         cancelbutton.setEnabled(false);
         orderTable.addMouseListener(new MouseAdapter() {
@@ -829,7 +847,10 @@ public class View extends JFrame implements CategoryListener,
         tcm.getColumn(1).setMaxWidth(50);
         itemTable.getTableHeader().setFont(new Font("Arial", 0, 15));
 
+
+
         tableEdit(itemTable); // edycja tabeli
+
 
         categoryBox.addItemListener(new ItemListener() {
             /**
@@ -898,6 +919,20 @@ public class View extends JFrame implements CategoryListener,
                 }
             }
         });
+
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem menuItemRemove = new JMenuItem("Usuń");
+        popupMenu.add(menuItemRemove);
+        itemTable.setComponentPopupMenu(popupMenu);
+        menuItemRemove.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selRow = Integer.parseInt(itemTable.getValueAt(itemTable.getSelectedRow(), 1).toString());
+                fireDeleteEvent(new CompanyEvent(null, "produkty",
+                        null, selRow, ""), "produkty");
+
+            }
+        });
+
         controls = new JPanel(new BorderLayout(5, 5));
         buttons = new JPanel(new GridLayout(0, 1, 4, 4));
         newrow = new JButton("Dodaj");
@@ -1066,10 +1101,28 @@ public class View extends JFrame implements CategoryListener,
                             System.out.println("dodaje");
                             id_company = 0;
                             id_category = 0;
+                            cmp[0]=0;
+                            cmpa[0]=0;
 
                         } else {
+
+                            String ka = "";
+                            String cc = "";
+                            String nn = "";
+                            System.out.print(cmp[0]);
+                            if(name.isEmpty()){
+                                nn = "NAZWA";
+                            }
+                              if(cmp[0]<1){
+                                ka = "KATEGORIA";
+                            }
+                              if(cmpa[0]!=1){
+                                cc ="FIRMA";
+                            }
+
+
                             JOptionPane.showMessageDialog(View.this,
-                                    "Uzupenij pola", "Uzupełnij pola",
+                                    "Uzupenij pola: " + ka + " " + cc + " " + nn, "Uzupełnij pola",
                                     JOptionPane.WARNING_MESSAGE);
                         }
                     }
@@ -1164,6 +1217,21 @@ public class View extends JFrame implements CategoryListener,
         print = new JButton("Drukuj");
         deletebutton = new JButton("Usuń");
         deleteAction(companyTable, "firmy");
+
+
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem menuItemRemove = new JMenuItem("Usuń");
+        popupMenu.add(menuItemRemove);
+        companyTable.setComponentPopupMenu(popupMenu);
+        menuItemRemove.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selRow = Integer.parseInt(companyTable.getValueAt(companyTable.getSelectedRow(), 1).toString());
+                fireDeleteEvent(new CompanyEvent(null, "firmy",
+                        null, selRow, ""), "firmy");
+
+            }
+        });
+
 
         newrow.addActionListener(new ActionListener() {
 
@@ -1267,8 +1335,20 @@ public class View extends JFrame implements CategoryListener,
                                     address, 0, "add"));
 
                         } else {
+
+                            String a ="";
+                            String b ="";
+
+                            if(name.isEmpty()){
+                                a = "NAZWA";
+                            }
+                            if(address.isEmpty()){
+                                b="ADRES";
+                            }
+
+
                             JOptionPane.showMessageDialog(View.this,
-                                    "Uzupełnij pole", "Uzupełnij pole",
+                                    "Uzupełnij pola: "+a+" "+b+" ", "Uzupełnij pole",
                                     JOptionPane.WARNING_MESSAGE);
                         }
                     }
@@ -1345,6 +1425,22 @@ public class View extends JFrame implements CategoryListener,
         tablemodel.addColumn("Lp.");
         tablemodel.addColumn("ID");
         tablemodel.addColumn("Nazwa");
+
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem menuItemRemove = new JMenuItem("Usuń");
+        popupMenu.add(menuItemRemove);
+        jTable1.setComponentPopupMenu(popupMenu);
+        menuItemRemove.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selRow = (Integer) jTable1.getValueAt(jTable1.getSelectedRow(), 1);
+                fireDeleteEvent(new CompanyEvent(null, "kategorie",
+                        null, selRow, ""), "kategorie");
+
+            }
+        });
+
+
+        jTable1.addMouseListener(new TableMouseListener(jTable1));
 
         jTable1.setRowHeight(20);
         jTable1.getColumn("ID").setCellEditor(null);
@@ -1498,6 +1594,15 @@ public class View extends JFrame implements CategoryListener,
      */
     public void setCategoryListener(CreateCategoryListener categoryListener) {
         this.categoryListener = categoryListener;
+    }
+
+    public void actionPerformed(ActionEvent event) {
+        JMenuItem menu = (JMenuItem) event.getSource();
+        if (menu == menuItemAdd) {
+            System.out.print("dodaj");
+        } else if (menu == menuItemRemove) {
+            System.out.print("usun");
+        }
     }
 
     /**
